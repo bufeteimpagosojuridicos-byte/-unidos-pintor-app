@@ -317,7 +317,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div style="text-align:center;margin-bottom:28px;">
       <img src="icon-192.png" style="width:80px;height:80px;border-radius:18px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,0.15);" alt="PintorApp">
       <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#0f172a;">Activa tu app</div>
-      <div style="font-size:13px;color:#64748b;margin-top:6px;line-height:1.5;">Introdueix el codi d'activació que t'ha donat <strong>Unidos por Gran Canaria</strong></div>
+      <div style="font-size:13px;color:#64748b;margin-top:6px;line-height:1.5;">Introduce el código de activación que te ha dado <strong>Unidos por Gran Canaria</strong></div>
     </div>
     <input id="activation-code" type="text" autocapitalize="words" autocapitalize="characters"
       placeholder="XXXX-XXXX-XX"
@@ -364,13 +364,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 </style>
 
 <div id="toast"></div>
-<div id="listen-overlay">🎤 Escoltant...</div>
+<div id="listen-overlay">🎤 Escuchando...</div>
 
 <!-- BLOCKED SCREEN -->
 <div id="blocked-screen" style="display:none;position:fixed;inset:0;z-index:9999;background:#0a0a0f;display:none;align-items:center;justify-content:center;flex-direction:column;padding:32px;text-align:center;">
   <div style="font-size:60px;margin-bottom:16px;" id="blocked-icon">🔒</div>
   <h2 style="font-family:'DM Sans',sans-serif;color:#f0f0f8;font-size:20px;margin-bottom:10px;" id="blocked-title">App no disponible</h2>
-  <p style="color:#6b6b8a;font-size:14px;max-width:280px;line-height:1.5;" id="blocked-msg">Contacta amb Unidos por Gran Canaria per activar la teva app.</p>
+  <p style="color:#6b6b8a;font-size:14px;max-width:280px;line-height:1.5;" id="blocked-msg">Contacta con Unidos por Gran Canaria para activar tu app.</p>
   <div style="margin-top:24px;">
     <a href="tel:928882852" style="background:#f5c800;color:#0a0a0f;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;display:inline-block;">📞 Contactar</a>
   </div>
@@ -471,7 +471,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         </div>
       </div>
       <div class="field-row">
-        <label>Adreça de l'obra</label>
+        <label>Dirección de la obra</label>
         <div class="field-with-mic">
           <input type="text" autocapitalize="words" id="cli-adr" placeholder="Calle, número, piso...">
           <button class="mic-btn" onclick="vozCampo('cli-adr',this)">🎤</button>
@@ -505,15 +505,14 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <span id="sum-base">0,00 €</span>
       </div>
       <div class="iva-row">
-        <label>IVA:</label>
+        <label>IGIC:</label>
         <select id="iva-sel" onchange="calcular()">
-          <option value="0">Sin IVA</option>
-          <option value="10">10%</option>
-          <option value="21">21%</option>
+          <option value="0">IGIC 0%</option>
+          <option value="7" selected>IGIC 7% (General)</option>
         </select>
       </div>
       <div class="sum-row">
-        <span>Importe IVA</span>
+        <span>Importe IGIC</span>
         <span id="sum-iva">0,00 €</span>
       </div>
       <div class="sum-row total">
@@ -525,6 +524,22 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="action-btns">
       <button class="btn-pdf" onclick="generarPDF()">📄 Generar PDF</button>
       <button class="btn-clear" onclick="netejar()">🗑 Limpiar</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+      <button onclick="enviarWhatsApp()" style="
+        padding:13px;border-radius:12px;border:none;cursor:pointer;
+        background:#25D366;color:white;font-size:14px;font-weight:700;
+        font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.856L0 24l6.332-1.51C8.024 23.452 9.982 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.853 0-3.608-.5-5.12-1.374l-.36-.214-3.762.897.942-3.653-.235-.374C2.538 15.61 2 13.866 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        WhatsApp
+      </button>
+      <button onclick="enviarEmail()" style="
+        padding:13px;border-radius:12px;border:none;cursor:pointer;
+        background:#003d8f;color:white;font-size:14px;font-weight:700;
+        font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Email
+      </button>
     </div>
 
     <div class="robert-footer">
@@ -547,11 +562,11 @@ var partidaId = 0;
 
 // Predefined partides (price=0 so painter enters their own)
 var PARTIDES_BASE = [
-  'Pintura interior paredes', 'Pintura interior techo', 'Pintura exterior fachada',
-  'Esmalte puertas y ventanas', 'Barniz madera', 'Microcemento',
-  'Gotelé', 'Imprimación', 'Estuco', 'Pintura garaje',
-  'Desplazamiento', 'Preparación superficie', 'Montaje/desmontaje andamio',
-  'Pintura rejas', 'Limpieza final'
+  'Pintura Interior Paredes', 'Pintura Interior Techo', 'Pintura Exterior Fachada',
+  'Esmalte Puertas y Ventanas', 'Barniz Madera', 'Microcemento',
+  'Gotelé', 'Imprimación', 'Estuco', 'Pintura Garaje',
+  'Desplazamiento', 'Preparación Superficie', 'Montaje/Desmontaje Andamio',
+  'Pintura Rejas', 'Limpieza Final'
 ];
 
 // ─── SETUP ───────────────────────────────────────────────────────────────────
@@ -560,23 +575,23 @@ var FIREBASE_URL = 'https://pintorapp-6d480-default-rtdb.europe-west1.firebaseda
 var FIREBASE_KEY = 'AIzaSyBsnQ3pRx0AS0n3AEr0jp8atCbVlQIuyYQ';
 
 window.onload = function() {
-  // Mostrar splash 2 segons
+  // Mostrar splash 2 segundos
   setTimeout(function() {
     var splash = document.getElementById('splash-screen');
     splash.style.opacity = '0';
     setTimeout(function() {
       splash.style.display = 'none';
-      // Comprovar si ja té codi activat
+      // Comprobar si ya tiene código activado
       var codiActiu = localStorage.getItem('pintor_codi_actiu');
       var saved = localStorage.getItem('pintor_user');
       if (codiActiu && saved) {
         userData = JSON.parse(saved);
         iniciarApp();
       } else if (codiActiu) {
-        // Té codi però no configuració
+        // Tiene código pero sin configuración
         document.getElementById('setup-screen').style.display = 'flex';
       } else {
-        // Sense codi — mostrar pantalla activació
+        // Sin código — mostrar pantalla activación
         document.getElementById('activation-screen').style.display = 'flex';
       }
     }, 500);
@@ -616,7 +631,7 @@ function verificarCodi() {
       if (!packs) { mostrarErrorCodi(); return; }
       var codiTrobat = false;
       var packId = null;
-      // Buscar el codi entre tots els packs
+      // Buscar el código entre todos los packs
       Object.keys(packs).forEach(function(pid) {
         var pack = packs[pid];
         if (pack.codigos && pack.codigos[codi]) {
@@ -628,16 +643,16 @@ function verificarCodi() {
         }
       });
       if (codiTrobat) {
-        // Marcar codi com usat
+        // Marcar código como usado
         fetch(FIREBASE_URL + '/pintorapp/packs/' + packId + '/codigos/' + codi + '.json', {
           method: 'PATCH',
           headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({estado:'actiu', activat_el: new Date().toISOString()})
+          body: JSON.stringify({estado:'actiu', activado_el: new Date().toISOString()})
         });
-        // Guardar codi localment
+        // Guardar código localmente
         localStorage.setItem('pintor_codi_actiu', codi);
         localStorage.setItem('pintor_pack_id', packId);
-        // Anar a configuració
+        // Ir a configuración
         document.getElementById('activation-screen').style.display = 'none';
         document.getElementById('setup-screen').style.display = 'flex';
         showToast('✅ ¡Código correcto! Ahora configura tu app.');
@@ -671,6 +686,24 @@ function selColor(el) {
   selectedColor = el.getAttribute('data-color');
 }
 
+function cargarLogo(input) {
+  if (!input.files || !input.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var preview = document.getElementById('logo-preview');
+    preview.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">';
+    window.logoDataUrl = e.target.result;
+    localStorage.setItem('pintor_logo', e.target.result);
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function borrarLogo() {
+  document.getElementById('logo-preview').innerHTML = '🖼';
+  window.logoDataUrl = null;
+  localStorage.removeItem('pintor_logo');
+}
+
 function crearApp() {
   var nom = document.getElementById('s-nom').value.trim();
   var tel = document.getElementById('s-tel').value.trim();
@@ -688,8 +721,14 @@ function iniciarApp() {
   // Apply color
   document.documentElement.style.setProperty('--primary', userData.color);
   // Header
-  var initials = userData.nom.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
-  document.getElementById('header-initials').textContent = initials;
+  var savedLogo = localStorage.getItem('pintor_logo');
+  var headerIni = document.getElementById('header-initials');
+  if (savedLogo) {
+    headerIni.innerHTML = '<img src="' + savedLogo + '" style="width:38px;height:38px;border-radius:10px;object-fit:cover;">';
+  } else {
+    var initials = userData.nom.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+    headerIni.textContent = initials;
+  }
   document.getElementById('header-name').textContent = userData.nom;
   document.getElementById('header-sub').textContent = userData.esp || 'Pintor';
   document.getElementById('app-header').style.background = userData.color;
@@ -738,7 +777,7 @@ function renderPartides() {
 
     var nameInp = document.createElement('input');
     nameInp.className = 'partida-name';
-    nameInp.placeholder = 'Descripción de la partida...';
+    nameInp.placeholder = 'Descripción de la Partida...';
     nameInp.value = p.nom;
     (function(pid){ nameInp.addEventListener('input', function(){ updatePartida(pid,'nom',this.value); }); })(p.id);
 
@@ -812,7 +851,7 @@ function renderPartides() {
 
 function triarPartida(pid) {
   var opts = PARTIDES_BASE.map(function(n,i){ return (i+1)+'. '+n; }).join('\n');
-  var input = prompt('Tria una partida (escriu el número o el nom):\n\n'+opts);
+  var input = prompt('Elige una partida (escribe el número o el nombre):\n\n'+opts);
   if (!input) return;
   var num = parseInt(input);
   var nom = '';
@@ -970,7 +1009,14 @@ function generarPDF() {
   doc.rect(0, 0, W, 30, 'F');
   doc.setTextColor(255,255,255);
   doc.setFontSize(18); doc.setFont('helvetica','bold');
-  doc.text(userData ? userData.nom : 'Pressupostador', 14, 13);
+  // Logo empresa en PDF si existe
+  var pdfLogo = localStorage.getItem('pintor_logo');
+  if (pdfLogo) {
+    try { doc.addImage(pdfLogo, 'JPEG', 14, 4, 22, 22); doc.text(userData ? userData.nom : 'Presupuestador', 40, 13); }
+    catch(e) { doc.text(userData ? userData.nom : 'Presupuestador', 14, 13); }
+  } else {
+    doc.text(userData ? userData.nom : 'Presupuestador', 14, 13);
+  }
   doc.setFontSize(9); doc.setFont('helvetica','normal');
   if (userData) doc.text(userData.esp + (userData.tel ? '  ·  ' + userData.tel : '') + (userData.pob ? '  ·  ' + userData.pob : ''), 14, 21);
   doc.text('PRESSUPOST', W-14, 13, {align:'right'});
@@ -986,7 +1032,7 @@ function generarPDF() {
   if (nom || adr) {
     doc.setFontSize(10); doc.setFont('helvetica','bold');
     doc.setTextColor(rgb.r, rgb.g, rgb.b);
-    doc.text('CLIENT', 14, Y); Y += 5;
+    doc.text('CLIENTE', 14, Y); Y += 5;
     doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
     doc.setFontSize(10);
     if (nom) { doc.text(nom, 14, Y); Y += 5; }
@@ -998,9 +1044,9 @@ function generarPDF() {
   doc.setFillColor(rgb.r, rgb.g, rgb.b);
   doc.rect(14, Y, W-28, 7, 'F');
   doc.setTextColor(255,255,255); doc.setFontSize(9); doc.setFont('helvetica','bold');
-  doc.text('DESCRIPCIÓ', 17, Y+5);
+  doc.text('DESCRIPCIÓN', 17, Y+5);
   doc.text('CANT.', 130, Y+5, {align:'right'});
-  doc.text('PREU/u.', 160, Y+5, {align:'right'});
+  doc.text('PRECIO/u.', 160, Y+5, {align:'right'});
   doc.text('TOTAL', W-14, Y+5, {align:'right'});
   Y += 9; doc.setTextColor(30,30,30); doc.setFont('helvetica','normal');
 
@@ -1021,8 +1067,8 @@ function generarPDF() {
   var ivaPct = document.getElementById('iva-sel').value;
 
   doc.setFontSize(9);
-  doc.text('Base imposable:', 130, Y); doc.text(document.getElementById('sum-base').textContent, W-14, Y, {align:'right'}); Y+=5;
-  doc.text('IVA ('+ivaPct+'%):', 130, Y); doc.text(document.getElementById('sum-iva').textContent, W-14, Y, {align:'right'}); Y+=5;
+  doc.text('Base imponible:', 130, Y); doc.text(document.getElementById('sum-base').textContent, W-14, Y, {align:'right'}); Y+=5;
+  doc.text('IGIC ('+ivaPct+'%):', 130, Y); doc.text(document.getElementById('sum-iva').textContent, W-14, Y, {align:'right'}); Y+=5;
   doc.setFillColor(rgb.r, rgb.g, rgb.b);
   doc.rect(120, Y-4, W-134, 8, 'F');
   doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(11);
@@ -1052,6 +1098,46 @@ function hexToRgb(hex) {
 }
 
 // ─── UTILS ────────────────────────────────────────────────────────────────────
+function resumenTexto() {
+  var nom = document.getElementById('cli-nom').value || 'Cliente';
+  var adr = document.getElementById('cli-adr').value || '';
+  var fecha = document.getElementById('cli-data').value || '';
+  var obs = document.getElementById('cli-obs').value || '';
+  var pintor = userData ? userData.nom : 'Presupuestador';
+  var lineas = partides.filter(function(p){return p.nom||p.preu;}).map(function(p){
+    return '• ' + (p.nom||'-') + ': ' + (p.cant||0) + ' × ' + (p.preu||0).toFixed(2) + '€ = ' + ((p.cant||0)*(p.preu||0)).toFixed(2) + '€';
+  }).join('\n');
+  var base = document.getElementById('sum-base').textContent;
+  var igic = document.getElementById('sum-iva').textContent;
+  var total = document.getElementById('sum-total').textContent;
+  var igicPct = document.getElementById('iva-sel').value;
+  return '*PRESUPUESTO - ' + pintor + '*' +
+    '\nCliente: ' + nom +
+    (adr ? '\nDirección: ' + adr : '') +
+    (fecha ? '\nFecha: ' + fecha : '') +
+    '\n\n' + lineas +
+    '\n\nBase imponible: ' + base +
+    '\nIGIC (' + igicPct + '%): ' + igic +
+    '\n*TOTAL: ' + total + '*' +
+    (obs ? '\n\nNotas: ' + obs : '') +
+    '\n\n_Patrocinado por Unidos por Gran Canaria · Gáldar · 928 88 28 52_';
+}
+
+function enviarWhatsApp() {
+  var texto = resumenTexto();
+  var url = 'https://wa.me/?text=' + encodeURIComponent(texto);
+  window.open(url, '_blank');
+}
+
+function enviarEmail() {
+  var nom = document.getElementById('cli-nom').value || 'Cliente';
+  var pintor = userData ? userData.nom : 'Presupuestador';
+  var texto = resumenTexto().replace(/\*/g,'');
+  var asunto = 'Presupuesto de ' + pintor + ' para ' + nom;
+  var url = 'mailto:?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(texto);
+  window.location.href = url;
+}
+
 function netejar() {
   if (!confirm('¿Limpiar todos los datos del presupuesto actual?')) return;
   document.getElementById('cli-nom').value = '';
@@ -1092,7 +1178,7 @@ const PINTOR_ID = localStorage.getItem('pintor_firebase_id') || null;
 if (!PINTOR_ID) {
   // Primer accés: la consola assigna l'ID, o treballem offline
   // Si no hi ha ID, l'app funciona en mode local
-  console.log('[PintorApp] Mode local — sense ID Firebase assignat');
+  console.log('[PintorApp] Modo local — sin ID Firebase asignado');
 } else {
   const app = initializeApp(firebaseConfig);
   const db  = getDatabase(app);
@@ -1100,9 +1186,9 @@ if (!PINTOR_ID) {
 
   onValue(pintorRef, function(snap) {
     var data = snap.val();
-    if (!data) return; // No trobat, continua en mode local
+    if (!data) return; // No encontrado, continúa en modo local
 
-    // Comprova caducitat
+    // Comprobar caducidad
     var expired = false;
     if (data.caducidad_meses > 0 && data.created_at) {
       var created = new Date(data.created_at);
@@ -1114,31 +1200,31 @@ if (!PINTOR_ID) {
     var activo = data.activo !== false && !expired;
 
     if (!activo) {
-      // Bloqueja l'app
+      // Bloquear la app
       var bs = document.getElementById('blocked-screen');
       bs.style.display = 'flex';
       if (expired) {
         document.getElementById('blocked-icon').textContent = '⏰';
-        document.getElementById('blocked-title').textContent = 'Llicència caducada';
-        document.getElementById('blocked-msg').textContent = 'Tu licencia ha caducado. Contacta amb Unidos por Gran Canaria per renovar-la.';
+        document.getElementById('blocked-title').textContent = 'Licencia caducada';
+        document.getElementById('blocked-msg').textContent = 'Tu licencia ha caducado. Contacta con Unidos por Gran Canaria para renovarla.';
       } else {
         document.getElementById('blocked-icon').textContent = '🔒';
         document.getElementById('blocked-title').textContent = 'App desactivada';
-        document.getElementById('blocked-msg').textContent = (data.mensaje || 'Contacta amb Unidos por Gran Canaria per activar la teva app.');
+        document.getElementById('blocked-msg').textContent = (data.mensaje || 'Contacta con Unidos por Gran Canaria para activar tu app.');
       }
-      // Oculta l'app
+      // Ocultar la app
       document.getElementById('setup-screen').style.display = 'none';
       document.getElementById('main-app').style.display = 'none';
     } else {
       document.getElementById('blocked-screen').style.display = 'none';
-      // Mostra missatge si n'hi ha
+      // Mostrar mensaje si hay uno
       if (data.mensaje) {
         var t = document.getElementById('toast');
         if (t) { t.textContent = '💬 ' + data.mensaje; t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 5000); }
       }
-      // Sincronitza dades del pintor si coincideix
+      // Sincronizar datos del pintor si coincide
       if (window.userData && data.nom === window.userData.nom) {
-        // Dades en sincronia
+        // Datos en sincronía
       }
     }
   });
