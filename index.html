@@ -586,6 +586,9 @@ var partidaId = 0;
 
 // Predefined partides (price=0 so painter enters their own)
 var PARTIDES_BASE = [
+  'Encintado y Protección Previa',
+  'Saneado del Soporte',
+  'Aplicación de Fijador',
   'Pintura Interior Paredes', 'Pintura Interior Techo', 'Pintura Exterior Fachada',
   'Esmalte Puertas y Ventanas', 'Barniz Madera', 'Microcemento',
   'Gotelé', 'Imprimación', 'Estuco', 'Pintura Garaje',
@@ -902,7 +905,7 @@ function triarPartida(pid) {
   hdr.appendChild(btnCerrar);
   box.appendChild(hdr);
 
-  var iconos = ['🎨','🎨','🏠','🚪','🪵','💧','🔲','🖌','🏛','🚗','🚐','🔧','🏗','⚙️','🧹'];
+  var iconos = ['🛡️','🔨','🧪','🎨','🎨','🏠','🚪','🪵','💧','🔲','🖌','🏛','🚗','🚐','🔧','🏗','⚙️','🧹'];
 
   PARTIDES_BASE.forEach(function(nom, i) {
     var item = document.createElement('div');
@@ -1037,6 +1040,74 @@ function vozCampo(fieldId, btn) {
 }
 
 function parseVozNumber(txt) {
+  var t = txt.toLowerCase().trim();
+
+  // Casos especiales con COMA/PUNTO decimal PRIMERO
+  // "cinco coma veinte" → 5.20, "doce coma cinco" → 12.5
+  var comaMatch = t.match(/^(.+?)\s+(?:coma|punto|punt)\s+(.+)$/);
+  if (comaMatch) {
+    var parteEntera = parseVozWord(comaMatch[1].trim());
+    var parteDecRaw = comaMatch[2].trim();
+    // Si parte decimal es una palabra como "veinte" → 20 pero como decimal es .20
+    var parteDecNum = parseVozWord(parteDecRaw);
+    // Construir decimal correcto
+    var decStr = parteDecNum.toString();
+    var resultado = parseFloat(parteEntera + '.' + decStr);
+    if (!isNaN(resultado)) return Math.round(resultado * 100) / 100;
+  }
+
+  // Número directo: "150", "25.5", "5,20"
+  var clean = t.replace(',','.');
+  if (/^[\d]+\.?[\d]*$/.test(clean)) {
+    return parseFloat(clean) || 0;
+  }
+
+  // Número con coma escrita: "5,20" → ya limpiado arriba
+  return Math.round(parseVozWord(t) * 100) / 100;
+}
+
+function parseVozWord(t) {
+  t = t.toLowerCase().trim();
+
+  // Número directo
+  var clean = t.replace(',','.');
+  if (/^[\d]+\.?[\d]*$/.test(clean)) return parseFloat(clean) || 0;
+
+  var unidades = {'cero':0,'un':1,'uno':1,'una':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9};
+  var decenas  = {'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15,
+    'dieciséis':16,'dieciseis':16,'diecisiete':17,'dieciocho':18,'diecinueve':19,
+    'veinte':20,'veintiuno':21,'veintidós':22,'veintidos':22,'veintitrés':23,'veintitres':23,
+    'veinticuatro':24,'veinticinco':25,'veintiséis':26,'veintiseis':26,
+    'veintisiete':27,'veintiocho':28,'veintinueve':29,
+    'treinta':30,'cuarenta':40,'cincuenta':50,'sesenta':60,'setenta':70,'ochenta':80,'noventa':90};
+  var centenas = {'cien':100,'ciento':100,'doscientos':200,'doscientas':200,
+    'trescientos':300,'trescientas':300,'cuatrocientos':400,'cuatrocientas':400,
+    'quinientos':500,'quinientas':500,'seiscientos':600,'seiscientas':600,
+    'setecientos':700,'setecientas':700,'ochocientos':800,'ochocientas':800,
+    'novecientos':900,'novecientas':900};
+
+  var total = 0;
+  var current = 0;
+  var words = t.split(/[\s,y]+/);
+
+  words.forEach(function(w) {
+    w = w.trim(); if (!w) return;
+    if (w === 'mil' || w === 'miles') {
+      current = (current || 1) * 1000; total += current; current = 0;
+    } else if (centenas[w] !== undefined) {
+      current += centenas[w];
+    } else if (decenas[w] !== undefined) {
+      current += decenas[w];
+    } else if (unidades[w] !== undefined) {
+      current += unidades[w];
+    } else {
+      var n = parseFloat(w.replace(',','.')); if (!isNaN(n)) current += n;
+    }
+  });
+  return total + current;
+}
+
+function parseVozNumber_OLD(txt) {
   var t = txt.toLowerCase().trim();
 
   // Primero intentar leer número directamente (150, 25.5, etc)
