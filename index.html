@@ -874,23 +874,50 @@ function renderPartides() {
 }
 
 function triarPartida(pid) {
-  var opts = PARTIDES_BASE.map(function(n,i){ return (i+1)+'. '+n; }).join('\n');
-  var input = prompt('Elige una partida (escribe el número o el nombre):\n\n'+opts);
-  if (!input) return;
-  var num = parseInt(input);
-  var nom = '';
-  if (!isNaN(num) && num >= 1 && num <= PARTIDES_BASE.length) {
-    nom = PARTIDES_BASE[num-1];
-  } else {
-    nom = input;
-  }
-  updatePartida(pid, 'nom', nom);
-  // Update input visually
-  var card = document.querySelector('[data-pid="'+pid+'"]');
-  if (card) {
-    var ni = card.querySelector('.partida-name');
-    if (ni) ni.value = nom;
-  }
+  var existing = document.getElementById('partida-modal');
+  if (existing) existing.remove();
+
+  var modal = document.createElement('div');
+  modal.id = 'partida-modal';
+  modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);display:flex;align-items:flex-end;justify-content:center;';
+  modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
+
+  var box = document.createElement('div');
+  box.style.cssText = 'background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:500px;max-height:78vh;overflow-y:auto;';
+
+  var hdr = document.createElement('div');
+  hdr.style.cssText = 'padding:16px 20px 12px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;border-radius:20px 20px 0 0;';
+  hdr.innerHTML = '<span style="font-size:15px;font-weight:700;color:#0f172a;">Seleccionar tipo de trabajo</span><button onclick="document.getElementById('partida-modal').remove()" style="background:#f1f5f9;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;color:#64748b;">✕</button>';
+  box.appendChild(hdr);
+
+  var iconos = ['🎨','🎨','🏠','🚪','🪵','💧','🔲','🖌','🏛','🚗','🚐','🔧','🏗','⚙️','🧹'];
+
+  PARTIDES_BASE.forEach(function(nom, i) {
+    var item = document.createElement('div');
+    item.style.cssText = 'padding:13px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid #f8fafc;';
+    item.innerHTML =
+      '<div style="width:36px;height:36px;border-radius:9px;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">' + (iconos[i]||'🔧') + '</div>' +
+      '<span style="flex:1;font-size:14px;font-weight:500;color:#0f172a;">' + nom + '</span>' +
+      '<div style="width:22px;height:22px;border-radius:50%;border:2px solid #003d8f;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✓</div>';
+    item.addEventListener('click', function() {
+      updatePartida(pid, 'nom', nom);
+      var card = document.querySelector('[data-pid="'+pid+'"]');
+      if (card) {
+        var ni = card.querySelector('.partida-name');
+        if (ni) {
+          // Mayúscula primera letra
+          ni.value = nom.charAt(0).toUpperCase() + nom.slice(1);
+        }
+      }
+      modal.remove();
+    });
+    item.addEventListener('mouseover', function(){ item.style.background='#f0f9ff'; });
+    item.addEventListener('mouseout', function(){ item.style.background=''; });
+    box.appendChild(item);
+  });
+
+  modal.appendChild(box);
+  document.body.appendChild(modal);
 }
 
 function updatePartida(pid, field, val) {
@@ -953,9 +980,11 @@ function iniciarVoz(inp, btn, isNumber) {
       inp.dispatchEvent(new Event('input'));
       showToast('🎤 ' + transcript + ' → ' + num);
     } else {
-      inp.value = transcript;
+      // Primera letra en mayúscula
+      var textoFinal = transcript.charAt(0).toUpperCase() + transcript.slice(1);
+      inp.value = textoFinal;
       inp.dispatchEvent(new Event('input'));
-      showToast('🎤 ' + transcript);
+      showToast('🎤 ' + textoFinal);
     }
   };
   rec.onerror = function(e) {
@@ -987,20 +1016,55 @@ function vozCampo(fieldId, btn) {
 
 function parseVozNumber(txt) {
   var t = txt.toLowerCase().trim();
-  var nums = { 'zero':0,'un':1,'una':1,'dos':2,'dues':2,'tres':3,'quatre':4,
-    'cinc':5,'sis':6,'set':7,'vuit':8,'nou':9,'deu':10,'onze':11,'dotze':12,
-    'tretze':13,'catorze':14,'quinze':15,'setze':16,'disset':17,'divuit':18,
-    'dinou':19,'vint':20,'trenta':30,'quaranta':40,'cinquanta':50,
-    'seixanta':60,'setanta':70,'vuitanta':80,'noranta':90,'cent':100,'dos-cents':200,
-    'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,
-    'siete':7,'ocho':8,'nueve':9,'diez':10,'once':11,'doce':12,
-    'veinte':20,'treinta':30,'cuarenta':40,'cincuenta':50,'sesenta':60,
-    'setenta':70,'ochenta':80,'noventa':90,'cien':100,'coma':'.','punt':'.','punto':'.' };
-  t = t.replace(/coma|punt|punto/g, '.');
-  for (var k in nums) { t = t.replace(new RegExp('\\b'+k+'\\b','g'), ' '+nums[k]+' '); }
-  t = t.replace(/\s+/g,' ').trim();
-  var n = parseFloat(t.replace(/[^0-9.]/g,''));
-  return isNaN(n) ? 0 : Math.round(n*100)/100;
+
+  // Primero intentar leer número directamente (150, 25.5, etc)
+  var directMatch = t.match(/^[\d]+([\.,][\d]+)?$/);
+  if (directMatch) {
+    var n = parseFloat(t.replace(',','.'));
+    return isNaN(n) ? 0 : Math.round(n*100)/100;
+  }
+
+  // Diccionario español completo
+  var unidades = {'cero':0,'un':1,'uno':1,'una':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9};
+  var decenas  = {'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15,'dieciséis':16,'dieciseis':16,'diecisiete':17,'dieciocho':18,'diecinueve':19,'veinte':20,'veintiuno':21,'veintidós':22,'veintidos':22,'veintitrés':23,'veintitres':23,'veinticuatro':24,'veinticinco':25,'veintiséis':26,'veintiseis':26,'veintisiete':27,'veintiocho':28,'veintinueve':29,'treinta':30,'cuarenta':40,'cincuenta':50,'sesenta':60,'setenta':70,'ochenta':80,'noventa':90};
+  var centenas = {'cien':100,'ciento':100,'doscientos':200,'doscientas':200,'trescientos':300,'trescientas':300,'cuatrocientos':400,'cuatrocientas':400,'quinientos':500,'quinientas':500,'seiscientos':600,'seiscientas':600,'setecientos':700,'setecientas':700,'ochocientos':800,'ochocientas':800,'novecientos':900,'novecientas':900};
+  var miles    = {'mil':1000,'miles':1000};
+
+  // Reemplazar "coma" o "punto" por punto decimal
+  t = t.replace(/coma|punto|punt/g, '.');
+
+  var total = 0;
+  var current = 0;
+  var words = t.split(/[\s,y]+/);
+
+  words.forEach(function(w) {
+    w = w.trim();
+    if (!w) return;
+    if (miles[w] !== undefined) {
+      current = (current || 1) * miles[w];
+      total += current;
+      current = 0;
+    } else if (centenas[w] !== undefined) {
+      current += centenas[w];
+    } else if (decenas[w] !== undefined) {
+      current += decenas[w];
+    } else if (unidades[w] !== undefined) {
+      current += unidades[w];
+    } else {
+      // Intentar parsear como número directo
+      var parsed = parseFloat(w.replace(',','.'));
+      if (!isNaN(parsed)) current += parsed;
+    }
+  });
+  total += current;
+
+  if (total === 0) {
+    // Último recurso: extraer dígitos del texto
+    var digits = t.replace(/[^0-9.]/g, '');
+    total = parseFloat(digits) || 0;
+  }
+
+  return Math.round(total * 100) / 100;
 }
 
 // ─── CALCUL ───────────────────────────────────────────────────────────────────
@@ -1272,23 +1336,34 @@ if (!PINTOR_ID) {
 <!-- BOTÓN INSTALAR PWA -->
 <div id="install-banner" style="
   display:none;
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-  z-index:9997;
-  background:linear-gradient(135deg,#003d8f,#002d6e);
-  color:white;border:none;border-radius:30px;
-  padding:14px 24px;
-  box-shadow:0 6px 24px rgba(0,61,143,0.4);
-  display:none;align-items:center;gap:10px;
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  z-index:9997;width:calc(100% - 32px);max-width:380px;
+  background:#fff;border-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.18);
+  padding:14px 16px;
   font-family:'DM Sans',sans-serif;
-  cursor:pointer;
-  white-space:nowrap;
   animation:slideUp 0.4s ease;">
-  <img src="icon-192.png" style="width:32px;height:32px;border-radius:8px;">
-  <div>
-    <div style="font-size:13px;font-weight:700;">📲 Añadir a pantalla de inicio</div>
-    <div style="font-size:10px;opacity:0.75;">Instala la app en tu móvil</div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <img src="icon-192.png" style="width:52px;height:52px;border-radius:12px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:14px;font-weight:700;color:#0f172a;">PintorApp</div>
+      <div style="font-size:11px;color:#64748b;margin-top:1px;">Tu presupuestador profesional</div>
+      <div style="display:flex;align-items:center;gap:3px;margin-top:3px;">
+        <span style="color:#f5c800;font-size:12px;">★★★★★</span>
+        <span style="font-size:10px;color:#94a3b8;">Gratis</span>
+      </div>
+    </div>
+    <button id="btn-instalar-app" style="
+      background:#003d8f;color:white;border:none;
+      padding:9px 18px;border-radius:20px;
+      font-size:13px;font-weight:700;cursor:pointer;
+      font-family:'DM Sans',sans-serif;white-space:nowrap;
+      flex-shrink:0;">Instalar</button>
+    <button onclick="cerrarBanner()" style="
+      background:none;border:none;color:#94a3b8;
+      font-size:18px;cursor:pointer;padding:4px;flex-shrink:0;
+      line-height:1;">✕</button>
   </div>
-  <button onclick="cerrarBanner()" style="background:rgba(255,255,255,0.2);border:none;color:white;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✕</button>
 </div>
 
 <style>
@@ -1316,8 +1391,7 @@ window.addEventListener('appinstalled', function() {
   deferredPrompt = null;
 });
 
-document.getElementById('install-banner').addEventListener('click', function(e) {
-  if (e.target.tagName === 'BUTTON') return; // no activar si pulsa la X
+document.getElementById('btn-instalar-app').addEventListener('click', function() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(function(result) {
