@@ -1144,5 +1144,79 @@ if (!PINTOR_ID) {
   });
 }
 </script>
+
+<!-- BOTÓN INSTALAR PWA -->
+<div id="install-banner" style="
+  display:none;
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:9997;
+  background:linear-gradient(135deg,#003d8f,#002d6e);
+  color:white;border:none;border-radius:30px;
+  padding:14px 24px;
+  box-shadow:0 6px 24px rgba(0,61,143,0.4);
+  display:none;align-items:center;gap:10px;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;
+  white-space:nowrap;
+  animation:slideUp 0.4s ease;">
+  <img src="icon-192.png" style="width:32px;height:32px;border-radius:8px;">
+  <div>
+    <div style="font-size:13px;font-weight:700;">📲 Añadir a pantalla de inicio</div>
+    <div style="font-size:10px;opacity:0.75;">Instala la app en tu móvil</div>
+  </div>
+  <button onclick="cerrarBanner()" style="background:rgba(255,255,255,0.2);border:none;color:white;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✕</button>
+</div>
+
+<style>
+@keyframes slideUp {
+  from{transform:translateX(-50%) translateY(80px);opacity:0;}
+  to{transform:translateX(-50%) translateY(0);opacity:1;}
+}
+</style>
+
+<script>
+var deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  var banner = document.getElementById('install-banner');
+  if (banner) {
+    banner.style.display = 'flex';
+  }
+});
+
+window.addEventListener('appinstalled', function() {
+  var banner = document.getElementById('install-banner');
+  if (banner) banner.style.display = 'none';
+  deferredPrompt = null;
+});
+
+document.getElementById('install-banner').addEventListener('click', function(e) {
+  if (e.target.tagName === 'BUTTON') return; // no activar si pulsa la X
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(result) {
+      if (result.outcome === 'accepted') {
+        document.getElementById('install-banner').style.display = 'none';
+      }
+      deferredPrompt = null;
+    });
+  } else {
+    // Instrucciones manuales según dispositivo
+    var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isIOS) {
+      alert('Para instalar en iPhone:\n\n1. Pulsa el botón Compartir \u25B2\n2. Selecciona \"Añadir a pantalla de inicio\"\n3. Pulsa \"Añadir\"');
+    } else {
+      alert('Para instalar:\n\n1. Pulsa el menú del navegador (3 puntos)\n2. Selecciona \"Añadir a pantalla de inicio\"');
+    }
+  }
+});
+
+function cerrarBanner() {
+  document.getElementById('install-banner').style.display = 'none';
+}
+</script>
+
 </body>
 </html>
