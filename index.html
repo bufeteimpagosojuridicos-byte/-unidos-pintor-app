@@ -319,7 +319,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#0f172a;">Activa tu app</div>
       <div style="font-size:13px;color:#64748b;margin-top:6px;line-height:1.5;">Introdueix el codi d'activació que t'ha donat <strong>Unidos por Gran Canaria</strong></div>
     </div>
-    <input id="activation-code" type="text" autocapitalize="characters"
+    <input id="activation-code" type="text" autocapitalize="words" autocapitalize="characters"
       placeholder="XXXX-XXXX-XX"
       style="width:100%;padding:16px;border:2px solid #e2e8f0;border-radius:12px;
         font-size:20px;font-weight:700;text-align:center;letter-spacing:4px;
@@ -344,7 +344,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </button>
     <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:2px solid #f5c800;">
       <div style="font-size:11px;color:#9ca3af;">¿No tienes código? Contacta con</div>
-      <a href="tel:+34652371659" style="font-size:14px;color:#003d8f;font-weight:700;text-decoration:none;">📞 +34 652 37 16 59</a>
+      <a href="tel:928882852" style="font-size:14px;color:#003d8f;font-weight:700;text-decoration:none;">📞 928 88 28 52</a>
     </div>
   </div>
 </div>
@@ -372,7 +372,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   <h2 style="font-family:'DM Sans',sans-serif;color:#f0f0f8;font-size:20px;margin-bottom:10px;" id="blocked-title">App no disponible</h2>
   <p style="color:#6b6b8a;font-size:14px;max-width:280px;line-height:1.5;" id="blocked-msg">Contacta amb Unidos por Gran Canaria per activar la teva app.</p>
   <div style="margin-top:24px;">
-    <a href="tel:+34652371659" style="background:#f5c800;color:#0a0a0f;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;display:inline-block;">📞 Contactar</a>
+    <a href="tel:928882852" style="background:#f5c800;color:#0a0a0f;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;display:inline-block;">📞 Contactar</a>
   </div>
 </div>
 
@@ -388,21 +388,21 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="setup-field">
       <label>Tu nombre o empresa</label>
       <div class="field-with-mic">
-        <input type="text" id="s-nom" placeholder="Juan Pintores / Pinturas García...">
+        <input type="text" autocapitalize="words" id="s-nom" placeholder="Juan Pintores / Pinturas García...">
         <button class="mic-btn" onclick="vozSetup('s-nom',this)">🎤</button>
       </div>
     </div>
     <div class="setup-field">
       <label>Teléfono</label>
       <div class="field-with-mic">
-        <input type="tel" id="s-tel" placeholder="612 345 678">
+        <input type="tel" autocapitalize="words" id="s-tel" placeholder="612 345 678">
         <button class="mic-btn" onclick="vozSetup('s-tel',this)">🎤</button>
       </div>
     </div>
     <div class="setup-field">
       <label>Población</label>
       <div class="field-with-mic">
-        <input type="text" id="s-pob" placeholder="Las Palmas, Telde...">
+        <input type="text" autocapitalize="words" id="s-pob" placeholder="Las Palmas, Telde...">
         <button class="mic-btn" onclick="vozSetup('s-pob',this)">🎤</button>
       </div>
     </div>
@@ -456,7 +456,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <span>🖌</span>
     <span class="rb-name">Unidos por Gran Canaria</span>
     <span>·</span>
-    <span class="rb-phone">📍 Gáldar · Gran Canaria · +34 652 37 16 59</span>
+    <span class="rb-phone">📍 Gáldar · Gran Canaria · 928 88 28 52</span>
   </div>
 
   <div class="content">
@@ -466,14 +466,14 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <div class="field-row">
         <label>Nombre del cliente</label>
         <div class="field-with-mic">
-          <input type="text" id="cli-nom" placeholder="Nombre y apellidos...">
+          <input type="text" autocapitalize="words" id="cli-nom" placeholder="Nombre y apellidos...">
           <button class="mic-btn" onclick="vozCampo('cli-nom',this)">🎤</button>
         </div>
       </div>
       <div class="field-row">
         <label>Adreça de l'obra</label>
         <div class="field-with-mic">
-          <input type="text" id="cli-adr" placeholder="Calle, número, piso...">
+          <input type="text" autocapitalize="words" id="cli-adr" placeholder="Calle, número, piso...">
           <button class="mic-btn" onclick="vozCampo('cli-adr',this)">🎤</button>
         </div>
       </div>
@@ -533,7 +533,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <strong>Unidos por Gran Canaria</strong>
         <span>Apoya a los profesionales de Gran Canaria</span>
       </div>
-      <a class="rf-call" href="tel:+34652371659">📞 Trucar</a>
+      <a class="rf-call" href="tel:928882852">📞 Llamar</a>
     </div>
 
   </div>
