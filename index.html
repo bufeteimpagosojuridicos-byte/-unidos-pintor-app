@@ -791,19 +791,17 @@ function parseVozNumber(txt) {
 }
 
 // ─── CALCUL ───────────────────────────────────────────────────────────────────
-// Auto-mayúscula tras espacio en campos de texto
+// Auto-mayúscula en cada palabra
 function autoMayuscula(inp) {
-  inp.addEventListener('keyup', function(e) {
-    if (e.key === ' ') {
-      var val = this.value;
-      var pos = this.selectionStart;
-      // Poner en mayúscula la letra anterior al espacio
-      var palabras = val.split(' ');
-      var nuevas = palabras.map(function(p) {
-        return p.charAt(0).toUpperCase() + p.slice(1);
-      });
-      this.value = nuevas.join(' ');
-      // Restaurar posición del cursor
+  inp.addEventListener('input', function() {
+    var val = this.value;
+    var pos = this.selectionStart;
+    // Capitalizar primera letra de cada palabra
+    var nuevo = val.replace(/(?:^|\s)\S/g, function(letra) {
+      return letra.toUpperCase();
+    });
+    if (nuevo !== val) {
+      this.value = nuevo;
       this.setSelectionRange(pos, pos);
     }
   });
