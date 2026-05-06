@@ -4,256 +4,169 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#003d8f">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <title>Plantilla WhatsApp · PintorApp</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --azul: #003d8f;
-  --azul2: #002060;
-  --amarillo: #f5c800;
-  --verde-wa: #25D366;
-  --bg: #f0f4f8;
-  --card: #ffffff;
-  --texto: #1a2340;
-  --muted: #64748b;
-  --border: #e2e8f0;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--texto); min-height: 100vh; }
-.header {
-  background: linear-gradient(135deg, var(--azul2), var(--azul));
-  padding: 20px 16px 32px; text-align: center; position: relative; overflow: hidden;
-}
-.header::after {
-  content: ''; position: absolute; bottom: -20px; left: 0; right: 0;
-  height: 40px; background: var(--bg); border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-}
-.header-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px; }
-.header-icon { width: 42px; height: 42px; background: var(--amarillo); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-.header-title { font-size: 22px; font-weight: 900; color: white; }
-.header-title span { color: var(--amarillo); }
-.header-sub { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 600; }
-.tabs { display: flex; gap: 8px; padding: 28px 16px 0; max-width: 500px; margin: 0 auto; }
-.tab { flex: 1; padding: 11px; border-radius: 12px; border: 2px solid var(--border); background: var(--card); font-size: 14px; font-weight: 800; color: var(--muted); cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
-.tab.active { background: var(--azul); color: white; border-color: var(--azul); }
-.nombre-wrap { padding: 14px 16px 0; max-width: 500px; margin: 0 auto; }
-.nombre-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; display: block; margin-bottom: 6px; }
-.nombre-inp { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 12px; font-size: 15px; font-family: 'Nunito', sans-serif; font-weight: 700; color: var(--texto); background: var(--card); outline: none; transition: border-color 0.2s; }
-.nombre-inp:focus { border-color: var(--azul); }
-.msgs { padding: 14px 16px; max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-.msg-card { background: var(--card); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,61,143,0.07); overflow: hidden; border-left: 4px solid var(--azul); }
-.msg-card.wa { border-left-color: var(--verde-wa); }
-.msg-card.followup { border-left-color: var(--amarillo); }
-.msg-head { padding: 12px 14px 8px; display: flex; justify-content: space-between; align-items: center; }
-.msg-label { font-size: 11px; font-weight: 800; color: var(--azul); text-transform: uppercase; letter-spacing: 0.8px; }
-.msg-card.wa .msg-label { color: var(--verde-wa); }
-.msg-card.followup .msg-label { color: #b45309; }
-.msg-tag { font-size: 11px; color: var(--muted); font-weight: 600; background: var(--bg); padding: 3px 8px; border-radius: 20px; }
-.msg-body { padding: 0 14px 12px; font-size: 14px; line-height: 1.65; color: var(--texto); white-space: pre-wrap; word-break: break-word; }
-.msg-nota { margin: 0 14px 10px; font-size: 12px; color: var(--muted); font-style: italic; background: #f8fafc; padding: 8px 10px; border-radius: 8px; }
-.msg-link { margin: 0 14px 10px; background: #eff6ff; border-radius: 10px; padding: 10px 12px; font-size: 12px; color: var(--azul); font-weight: 700; word-break: break-all; }
-.btn-copiar { width: calc(100% - 28px); margin: 0 14px 14px; padding: 11px; border: 2px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--texto); font-size: 13px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; }
-.btn-copiar:active { transform: scale(0.97); }
-.btn-copiar.ok { background: #dcfce7; border-color: #86efac; color: #166534; }
-.regla { max-width: 500px; margin: 0 auto 32px; padding: 0 16px; }
-.regla-inner { background: #fef3c7; border-radius: 12px; padding: 12px 14px; font-size: 13px; color: #92400e; font-weight: 700; }
+:root{--azul:#003d8f;--azul2:#002060;--amarillo:#f5c800;--verde:#25D366;--bg:#f0f4f8;--card:#fff;--texto:#1a2340;--muted:#64748b;--border:#e2e8f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--texto);min-height:100vh}
+.header{background:linear-gradient(135deg,var(--azul2),var(--azul));padding:20px 16px 32px;text-align:center;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;bottom:-20px;left:0;right:0;height:40px;background:var(--bg);border-radius:50% 50% 0 0/100% 100% 0 0}
+.hlogo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px}
+.hicon{width:42px;height:42px;background:var(--amarillo);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.htit{font-size:22px;font-weight:900;color:#fff}
+.htit span{color:var(--amarillo)}
+.hsub{font-size:12px;color:rgba(255,255,255,0.6);font-weight:600}
+.tabs{display:flex;gap:8px;padding:28px 16px 0;max-width:500px;margin:0 auto}
+.tab{flex:1;padding:11px;border-radius:12px;border:2px solid var(--border);background:var(--card);font-size:14px;font-weight:800;color:var(--muted);cursor:pointer;font-family:'Nunito',sans-serif}
+.tab.active{background:var(--azul);color:#fff;border-color:var(--azul)}
+.nwrap{padding:14px 16px 0;max-width:500px;margin:0 auto}
+.nlabel{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:6px}
+.ninp{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:12px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:700;color:var(--texto);background:var(--card);outline:none}
+.ninp:focus{border-color:var(--azul)}
+.msgs{padding:14px 16px;max-width:500px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.mcard{background:var(--card);border-radius:16px;box-shadow:0 2px 12px rgba(0,61,143,.07);overflow:hidden;border-left:4px solid var(--azul)}
+.mcard.wa{border-left-color:var(--verde)}
+.mcard.fu{border-left-color:var(--amarillo)}
+.mhead{padding:12px 14px 8px;display:flex;justify-content:space-between;align-items:center}
+.mlabel{font-size:11px;font-weight:800;color:var(--azul);text-transform:uppercase;letter-spacing:.8px}
+.mcard.wa .mlabel{color:var(--verde)}
+.mcard.fu .mlabel{color:#b45309}
+.mtag{font-size:11px;color:var(--muted);font-weight:600;background:var(--bg);padding:3px 8px;border-radius:20px}
+.mbody{padding:0 14px 12px;font-size:14px;line-height:1.65;color:var(--texto);white-space:pre-wrap;word-break:break-word}
+.mnota{margin:0 14px 10px;font-size:12px;color:var(--muted);font-style:italic;background:#f8fafc;padding:8px 10px;border-radius:8px}
+.mlink{margin:0 14px 10px;background:#eff6ff;border-radius:10px;padding:10px 12px;font-size:12px;color:var(--azul);font-weight:700;word-break:break-all}
+.bcopy{width:calc(100% - 28px);margin:0 14px 14px;padding:11px;border:2px solid var(--border);border-radius:10px;background:var(--bg);color:var(--texto);font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px}
+.bcopy.ok{background:#dcfce7;border-color:#86efac;color:#166534}
+.regla{max-width:500px;margin:0 auto 32px;padding:0 16px}
+.regla-in{background:#fef3c7;border-radius:12px;padding:12px 14px;font-size:13px;color:#92400e;font-weight:700}
 </style>
 </head>
 <body>
-
 <div class="header">
-  <div class="header-logo">
-    <div class="header-icon">🎨</div>
-    <div class="header-title">Pintor<span>App</span></div>
+  <div class="hlogo">
+    <div class="hicon">🎨</div>
+    <div class="htit">Pintor<span>App</span></div>
   </div>
-  <div class="header-sub">Plantilla captación WhatsApp · Unidos por Gran Canaria</div>
+  <div class="hsub">Plantilla captación WhatsApp · Unidos por Gran Canaria</div>
 </div>
 
 <div class="tabs">
-  <button class="tab active" id="tab-pintor" onclick="setTab('pintor')">🖌 Pintores</button>
-  <button class="tab" id="tab-partido" onclick="setTab('partido')">🏛 Militantes</button>
+  <button class="tab active" id="tp" onclick="setTab('pintor')">🖌 Pintores</button>
+  <button class="tab" id="tm" onclick="setTab('partido')">🏛 Militantes</button>
 </div>
 
-<div class="nombre-wrap">
-  <label class="nombre-label">Nombre del destinatario</label>
-  <input class="nombre-inp" id="nombre" type="text" placeholder="Carlos, Paco, Marta..." oninput="render()" autocapitalize="words">
+<div class="nwrap">
+  <label class="nlabel">Nombre del destinatario</label>
+  <input class="ninp" id="nombre" type="text" placeholder="Carlos, Paco, Marta..." oninput="render()" autocapitalize="words">
 </div>
 
 <div class="msgs" id="msgs"></div>
 
 <div class="regla">
-  <div class="regla-inner">⚠️ Regla de oro: solo UN seguimiento. Si no contesta en 24h, no insistas.</div>
+  <div class="regla-in">⚠️ Regla de oro: solo UN seguimiento. Si no contesta en 24h, no insistas.</div>
 </div>
 
 <script>
 var tab = 'pintor';
-var ENLACE = 'https://obracontrol-tech.github.io/jmprestige/presentacion-pintorapp.html';
+var BASE = 'https://bufeteimpagosojuridicos-byte.github.io/-unidos-pintor-app/presentacion-pintorapp.html';
 
-// Guardamos los textos en un array de objetos
-// Las funciones generan el texto según el nombre
-function getMensajes(nombre, tipo) {
-  if (tipo === 'pintor') {
+function setTab(t) {
+  tab = t;
+  document.getElementById('tp').className = 'tab' + (t === 'pintor' ? ' active' : '');
+  document.getElementById('tm').className = 'tab' + (t === 'partido' ? ' active' : '');
+  render();
+}
+
+function getMsgs(n, t) {
+  var link = BASE + '?nombre=' + encodeURIComponent(n);
+  if (t === 'pintor') {
     return [
-      {
-        clase: '', label: 'Mensaje 1 — Presentación', tag: 'Enviar primero',
-        texto: 'Hola ' + nombre + ' 👋 Te mando algo que creo que te va a interesar.
-
-Es una app gratuita para pintores — haces presupuestos profesionales en 2 minutos desde el móvil, con voz, carta de colores NCS y RAL, y los mandas por WhatsApp al cliente.
-
-Te la manda *Unidos por Gran Canaria* para apoyar a los profesionales de la isla 🇨🇦',
-        esEnlace: false
-      },
-      {
-        clase: 'wa', label: 'A continuación — Enlace', tag: 'Sin texto adicional',
-        nota: '📎 Pega este enlace como mensaje aparte, sin texto. Déjalo hablar solo.',
-        link: ENLACE + '?nombre=' + encodeURIComponent(nombre),
-        esEnlace: true
-      },
-      {
-        clase: '', label: 'Mensaje 2 — Si responde positivamente', tag: 'Solo si responde',
-        texto: 'Me alegra que te guste 😊 Mira todo lo que hace la app 👇
-
-' + ENLACE + '?nombre=' + encodeURIComponent(nombre) + '
-
-Pídeme el código de acceso y en 5 minutos la tienes instalada en tu móvil 📲 Sin compromiso, solo para que lo veas 😊',
-        esEnlace: false
-      },
-      {
-        clase: 'followup', label: 'Mensaje 3 — Seguimiento (24h)', tag: 'Una sola vez',
-        texto: 'Hola ' + nombre + ', ¿pudiste ver la app? 😊 Sin ningún compromiso, solo quería enseñarte lo que hemos preparado para los pintores de Gran Canaria. Cualquier duda me dices 👋',
-        esEnlace: false
-      }
+      { c:'', l:'Mensaje 1 — Presentación', tag:'Enviar primero', es_link:false,
+        txt:'Hola ' + n + ' 👋 Te mando algo que creo que te va a interesar.\n\nEs una app gratuita para pintores — haces presupuestos profesionales en 2 minutos desde el móvil, con voz, carta de colores NCS y RAL, y los mandas por WhatsApp al cliente.\n\nTe la manda *Unidos por Gran Canaria* para apoyar a los profesionales de la isla 🇨🇦' },
+      { c:'wa', l:'A continuación — Enlace', tag:'Sin texto adicional', es_link:true,
+        nota:'📎 Pega este enlace como mensaje aparte, sin texto. Déjalo hablar solo.',
+        link: link },
+      { c:'', l:'Mensaje 2 — Si responde positivamente', tag:'Solo si responde', es_link:false,
+        txt:'Me alegra que te guste 😊 Mira todo lo que hace la app 👇\n\n' + link + '\n\nPídeme el código de acceso y en 5 minutos la tienes instalada en tu móvil 📲 Sin compromiso, solo para que lo veas 😊' },
+      { c:'fu', l:'Mensaje 3 — Seguimiento (24h)', tag:'Una sola vez', es_link:false,
+        txt:'Hola ' + n + ', ¿pudiste ver la app? 😊 Sin ningún compromiso, solo quería enseñarte lo que hemos preparado para los pintores de Gran Canaria. Cualquier duda me dices 👋' }
     ];
   } else {
     return [
-      {
-        clase: '', label: 'Mensaje 1 — Para militantes', tag: 'Enviar primero',
-        texto: 'Hola ' + nombre + ' 👋 Mira lo que ha preparado *Unidos por Gran Canaria* para los pintores de Gáldar.
-
-Una app profesional para hacer presupuestos desde el móvil — con carta de colores, voz, PDF y WhatsApp. Completamente gratis para quien tenga el código de acceso 🇨🇦',
-        esEnlace: false
-      },
-      {
-        clase: 'wa', label: 'A continuación — Enlace', tag: 'Sin texto adicional',
-        nota: '📎 Pega este enlace como mensaje aparte, sin texto. Déjalo hablar solo.',
-        link: ENLACE + '?nombre=' + encodeURIComponent(nombre),
-        esEnlace: true
-      },
-      {
-        clase: '', label: 'Mensaje 2 — Si muestra interés', tag: 'Solo si responde',
-        texto: 'Es una forma concreta de apoyar a los autónomos de la isla 💪
-
-Si conoces algún pintor al que le pueda venir bien, pásamelo y le mando su código de acceso gratis 👇
-
-' + ENLACE + '?nombre=' + encodeURIComponent(nombre) + '
-
-¡Seguro que le impresiona! 😊',
-        esEnlace: false
-      },
-      {
-        clase: 'followup', label: 'Mensaje 3 — Seguimiento (24h)', tag: 'Una sola vez',
-        texto: 'Hola ' + nombre + ', ¿pudiste ver la presentación? 😊 Si conoces pintores en Gáldar o alrededores, cuéntame y les gestiono el acceso gratuito. Cualquier duda me dices 👋',
-        esEnlace: false
-      }
+      { c:'', l:'Mensaje 1 — Para militantes', tag:'Enviar primero', es_link:false,
+        txt:'Hola ' + n + ' 👋 Mira lo que ha preparado *Unidos por Gran Canaria* para los pintores de Gáldar.\n\nUna app profesional para hacer presupuestos desde el móvil — con carta de colores, voz, PDF y WhatsApp. Completamente gratis para quien tenga el código de acceso 🇨🇦' },
+      { c:'wa', l:'A continuación — Enlace', tag:'Sin texto adicional', es_link:true,
+        nota:'📎 Pega este enlace como mensaje aparte, sin texto. Déjalo hablar solo.',
+        link: link },
+      { c:'', l:'Mensaje 2 — Si muestra interés', tag:'Solo si responde', es_link:false,
+        txt:'Es una forma concreta de apoyar a los autónomos de la isla 💪\n\nSi conoces algún pintor al que le pueda venir bien, pásamelo y le mando su código de acceso gratis 👇\n\n' + link + '\n\n¡Seguro que le impresiona! 😊' },
+      { c:'fu', l:'Mensaje 3 — Seguimiento (24h)', tag:'Una sola vez', es_link:false,
+        txt:'Hola ' + n + ', ¿pudiste ver la presentación? 😊 Si conoces pintores en Gáldar o alrededores, cuéntame y les gestiono el acceso gratuito. Cualquier duda me dices 👋' }
     ];
   }
 }
 
-// Guardamos los textos actuales para los botones copiar
-var textoActual = [];
-
-function setTab(t) {
-  tab = t;
-  document.getElementById('tab-pintor').classList.toggle('active', t === 'pintor');
-  document.getElementById('tab-partido').classList.toggle('active', t === 'partido');
-  render();
-}
-
 function render() {
-  var nombre = document.getElementById('nombre').value.trim() || '[NOMBRE]';
-  var msgs = getMensajes(nombre, tab);
-  textoActual = msgs;
+  var n = document.getElementById('nombre').value.trim() || '[NOMBRE]';
+  var msgs = getMsgs(n, tab);
   var cont = document.getElementById('msgs');
   cont.innerHTML = '';
-
-  msgs.forEach(function(m, i) {
+  msgs.forEach(function(m) {
     var card = document.createElement('div');
-    card.className = 'msg-card' + (m.clase ? ' ' + m.clase : '');
-
+    card.className = 'mcard' + (m.c ? ' ' + m.c : '');
     var head = document.createElement('div');
-    head.className = 'msg-head';
-    head.innerHTML = '<span class="msg-label">' + m.label + '</span><span class="msg-tag">' + m.tag + '</span>';
+    head.className = 'mhead';
+    head.innerHTML = '<span class="mlabel">' + m.l + '</span><span class="mtag">' + m.tag + '</span>';
     card.appendChild(head);
-
-    if (m.esEnlace) {
+    var btn = document.createElement('button');
+    btn.className = 'bcopy';
+    if (m.es_link) {
       var nota = document.createElement('div');
-      nota.className = 'msg-nota';
+      nota.className = 'mnota';
       nota.textContent = m.nota;
       card.appendChild(nota);
-
-      var link = document.createElement('div');
-      link.className = 'msg-link';
-      link.textContent = '🔗 ' + m.link;
-      card.appendChild(link);
-
-      var btn = document.createElement('button');
-      btn.className = 'btn-copiar';
+      var ld = document.createElement('div');
+      ld.className = 'mlink';
+      ld.textContent = '🔗 ' + m.link;
+      card.appendChild(ld);
       btn.textContent = '📋 Copiar enlace';
-      (function(texto) {
-        btn.addEventListener('click', function() { copiar(btn, texto); });
-      })(m.link);
-      card.appendChild(btn);
-
+      var txt = m.link;
+      btn.addEventListener('click', function() { copiar(btn, txt); });
     } else {
       var body = document.createElement('div');
-      body.className = 'msg-body';
-      body.textContent = m.texto;
+      body.className = 'mbody';
+      body.textContent = m.txt;
       card.appendChild(body);
-
-      var btn = document.createElement('button');
-      btn.className = 'btn-copiar';
       btn.textContent = '📋 Copiar mensaje';
-      (function(texto) {
-        btn.addEventListener('click', function() { copiar(btn, texto); });
-      })(m.texto);
-      card.appendChild(btn);
+      var txt = m.txt;
+      btn.addEventListener('click', function() { copiar(btn, txt); });
     }
-
+    card.appendChild(btn);
     cont.appendChild(card);
   });
 }
 
-function copiar(btn, texto) {
-  var original = btn.textContent;
+function copiar(btn, txt) {
+  var orig = btn.textContent;
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(texto).then(function() {
+    navigator.clipboard.writeText(txt).then(function() {
       btn.textContent = '✅ Copiado';
       btn.classList.add('ok');
-      setTimeout(function() { btn.textContent = original; btn.classList.remove('ok'); }, 2000);
-    }).catch(function() { fallbackCopy(btn, texto, original); });
+      setTimeout(function() { btn.textContent = orig; btn.classList.remove('ok'); }, 2000);
+    });
   } else {
-    fallbackCopy(btn, texto, original);
-  }
-}
-
-function fallbackCopy(btn, texto, original) {
-  var ta = document.createElement('textarea');
-  ta.value = texto;
-  ta.style.position = 'fixed';
-  ta.style.top = '0';
-  ta.style.opacity = '0';
-  document.body.appendChild(ta);
-  ta.focus();
-  ta.select();
-  try {
+    var ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.cssText = 'position:fixed;top:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
     document.execCommand('copy');
+    document.body.removeChild(ta);
     btn.textContent = '✅ Copiado';
     btn.classList.add('ok');
-    setTimeout(function() { btn.textContent = original; btn.classList.remove('ok'); }, 2000);
-  } catch(e) {}
-  document.body.removeChild(ta);
+    setTimeout(function() { btn.textContent = orig; btn.classList.remove('ok'); }, 2000);
+  }
 }
 
 render();
