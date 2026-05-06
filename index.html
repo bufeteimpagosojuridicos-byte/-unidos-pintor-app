@@ -518,6 +518,14 @@ function crearApp() {
   iniciarApp();
 }
 
+// Aplicar auto-mayúscula en setup al cargar
+window.addEventListener('DOMContentLoaded', function() {
+  ['s-nom','s-tel','s-pob'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) autoMayuscula(el);
+  });
+});
+
 function iniciarApp() {
   document.getElementById('setup-screen').style.display = 'none';
   document.getElementById('main-app').style.display = 'block';
@@ -535,6 +543,12 @@ function iniciarApp() {
   if (df && !df.value) df.value = today;
   // Default partida
   if (partides.length === 0) afegirPartida();
+
+  // Auto-mayúscula en campos de cliente
+  ['cli-nom','cli-adr','cli-obs'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) autoMayuscula(el);
+  });
 }
 
 function resetApp() {
@@ -777,6 +791,24 @@ function parseVozNumber(txt) {
 }
 
 // ─── CALCUL ───────────────────────────────────────────────────────────────────
+// Auto-mayúscula tras espacio en campos de texto
+function autoMayuscula(inp) {
+  inp.addEventListener('keyup', function(e) {
+    if (e.key === ' ') {
+      var val = this.value;
+      var pos = this.selectionStart;
+      // Poner en mayúscula la letra anterior al espacio
+      var palabras = val.split(' ');
+      var nuevas = palabras.map(function(p) {
+        return p.charAt(0).toUpperCase() + p.slice(1);
+      });
+      this.value = nuevas.join(' ');
+      // Restaurar posición del cursor
+      this.setSelectionRange(pos, pos);
+    }
+  });
+}
+
 function calcular() {
   var base = 0;
   partides.forEach(function(p) { base += (p.cant || 0) * (p.preu || 0); });
