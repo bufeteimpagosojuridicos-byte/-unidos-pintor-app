@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#2d7a2d">
+<meta name="theme-color" content="#1a3d8f">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="DurcaplastApp">
-<title>DurcaplastApp · Presupuestador</title>
+<meta name="apple-mobile-web-app-title" content="PintorApp Gáldar">
+<title>PintorApp · Unidos por Gran Canaria</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
-  --primary: #2d7a2d;
-  --accent: #f59e0b;
+  --primary: #1a3d8f;
+  --amarillo: #F5C800;
   --bg: #f8fafc;
   --card: #ffffff;
   --text: #0f172a;
@@ -27,7 +27,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 
 #setup-screen {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%);
+  background: linear-gradient(135deg, #0a1a4a 0%, #1a3d8f 60%, #0a1a4a 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 24px;
 }
@@ -47,19 +47,26 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .color-opt { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: transform 0.2s, border-color 0.2s; position: relative; }
 .color-opt.sel { border-color: #0f172a; transform: scale(1.15); }
 .color-opt.sel::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: white; font-size: 14px; font-weight: 700; }
-.btn-create { width: 100%; padding: 15px; background: linear-gradient(135deg, #2d7a2d, #1a4d1a); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; font-family: 'DM Sans', sans-serif; transition: transform 0.1s; }
+.btn-create { width: 100%; padding: 15px; background: linear-gradient(135deg, #1a3d8f, #0a1a4a); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; font-family: 'DM Sans', sans-serif; transition: transform 0.1s; }
 .btn-create:active { transform: scale(0.98); }
 
 #main-app { display: none; }
-.app-header { padding: 0 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; min-height: 60px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.app-header { padding: 0 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; min-height: 60px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); background: var(--primary); }
 .header-left { display: flex; align-items: center; gap: 10px; }
-.header-initials { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: white; background: rgba(255,255,255,0.25); }
+.header-initials { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: var(--primary); background: var(--amarillo); overflow: hidden; }
 .header-name { font-weight: 700; font-size: 15px; color: white; line-height: 1.1; }
 .header-sub { font-size: 11px; color: rgba(255,255,255,0.75); }
 .btn-settings { background: rgba(255,255,255,0.2); border: none; color: white; width: 36px; height: 36px; border-radius: 9px; font-size: 16px; cursor: pointer; }
-.robert-bar { background: var(--primary); display: flex; align-items: center; justify-content: center; padding: 7px 16px; gap: 8px; }
-.robert-bar span { font-size: 11px; color: white; font-weight: 600; }
-.robert-bar .rb-name { font-size: 13px; font-weight: 800; color: white; }
+
+/* Barra Unidos */
+.unidos-bar {
+  background: var(--amarillo);
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px 16px; gap: 10px;
+}
+.unidos-bar img { height: 36px; object-fit: contain; }
+.unidos-bar .ub-name { font-size: 13px; font-weight: 800; color: var(--primary); }
+.unidos-bar .ub-sub { font-size: 11px; color: var(--primary); opacity: 0.8; }
 
 .content { padding: 16px; max-width: 600px; margin: 0 auto; }
 .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 10px; margin-top: 20px; }
@@ -77,7 +84,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .mic-btn.listening { background: #fee2e2; animation: pulse 0.8s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
-/* PARTIDAS */
 .partida-card { background: var(--card); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); margin-bottom: 10px; border-left: 4px solid var(--primary); animation: slideIn 0.2s ease; }
 @keyframes slideIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
 .partida-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
@@ -92,11 +98,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .num-mic { width: 34px; height: 34px; border-radius: 8px; border: none; background: #eff6ff; color: var(--primary); font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .num-mic.listening { background: #fee2e2; animation: pulse 0.8s infinite; }
 
-/* BOTONES AÑADIR PARTIDA */
 .add-btns { display: flex; gap: 8px; margin-bottom: 16px; }
 .add-partida-btn { flex: 1; padding: 13px; background: white; border: 2px dashed var(--border); border-radius: 12px; font-size: 13px; font-weight: 600; color: var(--primary); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
-.add-partida-btn:hover { border-color: var(--primary); background: #f0fdf4; }
-.add-libre-btn { flex: 1; padding: 13px; background: white; border: 2px dashed #f59e0b; border-radius: 12px; font-size: 13px; font-weight: 600; color: #d97706; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.add-partida-btn:hover { border-color: var(--primary); background: #eff6ff; }
+.add-libre-btn { flex: 1; padding: 13px; background: white; border: 2px dashed #f59e0b; border-radius: 12px; font-size: 13px; font-weight: 600; color: #d97706; cursor: pointer; }
 .add-libre-btn:hover { border-color: #d97706; background: #fffbeb; }
 
 .summary-card { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 16px; }
@@ -109,24 +114,21 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .iva-row select { padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-family: 'DM Sans', sans-serif; background: #f8fafc; }
 
 .action-btns { display: flex; gap: 10px; margin-bottom: 16px; }
-.btn-pdf { flex: 1; padding: 14px; border-radius: 12px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; background: linear-gradient(135deg, var(--primary), #1d4ed8); color: white; }
+.btn-pdf { flex: 1; padding: 14px; border-radius: 12px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; background: linear-gradient(135deg, #1a3d8f, #0a1a4a); color: white; }
 .btn-clear { flex: 1; padding: 14px; border-radius: 12px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; background: #f1f5f9; color: var(--muted); }
 
-.color-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+.color-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
 .color-btns button { padding: 12px 4px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; }
 
-.robert-footer { background: white; border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); margin-bottom: 24px; border-top: 3px solid var(--primary); display: flex; align-items: center; gap: 12px; }
-.rf-logo { width: 52px; height: 52px; border-radius: 10px; object-fit: contain; background: var(--primary); padding: 6px; flex-shrink: 0; }
+.unidos-footer { background: white; border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); margin-bottom: 24px; border-top: 4px solid var(--amarillo); display: flex; align-items: center; gap: 12px; }
 .rf-info { flex: 1; }
 .rf-info strong { display: block; font-size: 14px; color: var(--primary); font-weight: 800; }
 .rf-info span { font-size: 12px; color: var(--muted); }
-.rf-call { background: var(--primary); color: white; border: none; border-radius: 9px; padding: 9px 14px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: none; display: flex; align-items: center; gap: 4px; }
 
 #toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #0f172a; color: white; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 500; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 9999; white-space: nowrap; max-width: 90vw; text-align: center; }
 #toast.show { opacity: 1; }
 #listen-overlay { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #ef4444; color: white; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 700; display: none; z-index: 9999; animation: pulse 0.8s infinite; }
 
-/* MODAL COLORES */
 .color-modal { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); flex-direction:column; }
 .color-modal-inner { background:#fff; height:100%; display:flex; flex-direction:column; max-width:500px; margin:0 auto; width:100%; }
 .color-modal-hdr { padding:16px 20px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
@@ -135,15 +137,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .color-modal-familias { padding:8px 16px; border-bottom:1px solid #e2e8f0; flex-shrink:0; overflow-x:auto; white-space:nowrap; display:flex; gap:8px; }
 .color-modal-lista { flex:1; overflow-y:auto; padding:8px 0; }
 .color-modal-footer { padding:10px 16px; background:#f8fafc; border-top:1px solid #e2e8f0; flex-shrink:0; font-size:11px; color:#94a3b8; text-align:center; }
-
-/* RGB badge */
-.rgb-badge { font-size:10px; color:#64748b; font-family:monospace; margin-top:1px; }
 </style>
 
-<link rel="apple-touch-icon" href="icono-durcaplast.png">
-<link rel="icon" type="image/png" href="icono-durcaplast.png">
+<link rel="apple-touch-icon" href="logo-unidos.png">
+<link rel="icon" type="image/png" href="logo-unidos.png">
 <script>
-var manifestData = {"name":"DurcaplastApp","short_name":"DurcaplastApp","start_url":"./","display":"standalone","background_color":"#2d7a2d","theme_color":"#2d7a2d","icons":[{"src":"icono-durcaplast.png","sizes":"192x192","type":"image/png"},{"src":"icono-durcaplast.png","sizes":"512x512","type":"image/png"}]};
+var manifestData = {"name":"PintorApp · Unidos por Gran Canaria","short_name":"PintorApp Gáldar","start_url":"./","display":"standalone","background_color":"#1a3d8f","theme_color":"#1a3d8f","icons":[{"src":"logo-unidos.png","sizes":"192x192","type":"image/png"},{"src":"logo-unidos.png","sizes":"512x512","type":"image/png"}]};
 var blob = new Blob([JSON.stringify(manifestData)],{type:'application/json'});
 var link = document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(blob); document.head.appendChild(link);
 </script>
@@ -157,22 +156,22 @@ var link = document.createElement('link'); link.rel='manifest'; link.href=URL.cr
 <div id="setup-screen">
   <div class="setup-card">
     <div class="setup-logo">
-      <img src="icono-durcaplast.png" style="width:72px;height:72px;margin-bottom:8px;object-fit:contain;" alt="Durcaplast">
-      <h1>DurcaplastApp</h1>
-      <p>Configura tu app en 30 segundos</p>
+      <img src="logo-unidos.png" style="width:80px;height:80px;margin-bottom:8px;object-fit:contain;" alt="Unidos por Gran Canaria">
+      <h1>PintorApp</h1>
+      <p>Unidos por Gran Canaria · Gáldar</p>
     </div>
     <div class="setup-field"><label>Tu nombre o empresa</label><div class="field-with-mic"><input type="text" id="s-nom" placeholder="Juan Pintores / Pinturas García..."><button class="mic-btn" onclick="vozSetup('s-nom',this)">🎤</button></div></div>
     <div class="setup-field"><label>Teléfono</label><div class="field-with-mic"><input type="tel" id="s-tel" placeholder="612 345 678"><button class="mic-btn" onclick="vozSetup('s-tel',this)">🎤</button></div></div>
-    <div class="setup-field"><label>Población</label><div class="field-with-mic"><input type="text" id="s-pob" placeholder="Madrid, Granada, Sevilla..."><button class="mic-btn" onclick="vozSetup('s-pob',this)">🎤</button></div></div>
+    <div class="setup-field"><label>Población</label><div class="field-with-mic"><input type="text" id="s-pob" placeholder="Gáldar, Las Palmas..."><button class="mic-btn" onclick="vozSetup('s-pob',this)">🎤</button></div></div>
     <div class="setup-field"><label>Especialidad</label><select id="s-esp"><option>Pintura interior y exterior</option><option>Pintura industrial</option><option>Decoración y pintura</option><option>Impermeabilizaciones</option><option>Pintura y reformas</option><option>Pintor autónomo</option></select></div>
     <div class="setup-field">
       <label>Color de tu app</label>
       <div class="color-picker">
-        <div class="color-opt sel" data-color="#2d7a2d" style="background:#2d7a2d" onclick="selColor(this)"></div>
-        <div class="color-opt" data-color="#7c3aed" style="background:#7c3aed" onclick="selColor(this)"></div>
+        <div class="color-opt sel" data-color="#1a3d8f" style="background:#1a3d8f" onclick="selColor(this)"></div>
+        <div class="color-opt" data-color="#F5C800" style="background:#F5C800" onclick="selColor(this)"></div>
         <div class="color-opt" data-color="#059669" style="background:#059669" onclick="selColor(this)"></div>
         <div class="color-opt" data-color="#dc2626" style="background:#dc2626" onclick="selColor(this)"></div>
-        <div class="color-opt" data-color="#d97706" style="background:#d97706" onclick="selColor(this)"></div>
+        <div class="color-opt" data-color="#7c3aed" style="background:#7c3aed" onclick="selColor(this)"></div>
         <div class="color-opt" data-color="#0891b2" style="background:#0891b2" onclick="selColor(this)"></div>
         <div class="color-opt" data-color="#1e293b" style="background:#1e293b" onclick="selColor(this)"></div>
       </div>
@@ -181,14 +180,14 @@ var link = document.createElement('link'); link.rel='manifest'; link.href=URL.cr
       <label>Tu logo (opcional)</label>
       <div style="display:flex;align-items:center;gap:10px;">
         <div id="logo-preview" style="width:56px;height:56px;border-radius:12px;border:2px dashed #e2e8f0;background:#f8fafc;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden;">🖼</div>
-        <div style="flex:1;"><label for="logo-file" style="display:block;width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:13px;font-weight:700;color:#2d7a2d;background:white;cursor:pointer;text-align:center;font-family:'DM Sans',sans-serif;">📁 Seleccionar imagen</label><input type="file" id="logo-file" accept="image/*" style="display:none;" onchange="cargarLogo(this)"><div style="font-size:11px;color:#94a3b8;margin-top:4px;text-align:center;">PNG, JPG · Aparece en el PDF</div></div>
+        <div style="flex:1;"><label for="logo-file" style="display:block;width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:13px;font-weight:700;color:#1a3d8f;background:white;cursor:pointer;text-align:center;font-family:'DM Sans',sans-serif;">📁 Seleccionar imagen</label><input type="file" id="logo-file" accept="image/*" style="display:none;" onchange="cargarLogo(this)"><div style="font-size:11px;color:#94a3b8;margin-top:4px;text-align:center;">PNG, JPG · Aparece en el PDF</div></div>
       </div>
     </div>
     <button class="btn-create" onclick="crearApp()">🚀 Crear mi app</button>
-    <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:3px solid #2d7a2d;display:flex;flex-direction:column;align-items:center;gap:6px;">
-      <img src="icono-durcaplast.png" style="height:40px;object-fit:contain;">
-      <span style="font-size:13px;font-weight:800;color:#2d7a2d;">Presupuestador Oficial Durcaplast</span>
-      <span style="font-size:11px;color:#9ca3af;">Fábrica de Pinturas · Dúrcal, Granada · Desde 1990</span>
+    <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:4px solid #F5C800;display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <img src="logo-unidos.png" style="height:48px;object-fit:contain;">
+      <span style="font-size:13px;font-weight:800;color:#1a3d8f;">Unidos por Gran Canaria</span>
+      <span style="font-size:11px;color:#9ca3af;">Gáldar · Gran Canaria</span>
     </div>
   </div>
 </div>
@@ -198,15 +197,17 @@ var link = document.createElement('link'); link.rel='manifest'; link.href=URL.cr
   <div class="app-header" id="app-header">
     <div class="header-left">
       <div class="header-initials" id="header-initials">JM</div>
-      <div><div class="header-name" id="header-name">Mi nombre</div><div class="header-sub" id="header-sub">DurcaplastApp</div></div>
+      <div><div class="header-name" id="header-name">Mi nombre</div><div class="header-sub" id="header-sub">PintorApp Gáldar</div></div>
     </div>
     <button class="btn-settings" onclick="resetApp()">⚙</button>
   </div>
-  <div class="robert-bar">
-    <img src="icono-durcaplast.png" style="height:28px;object-fit:contain;">
-    <span class="rb-name">Durcaplast · Fábrica de Pinturas</span>
-    <span>·</span>
-    <span style="font-size:11px;color:rgba(255,255,255,0.8);">📍 Dúrcal, Granada</span>
+
+  <div class="unidos-bar">
+    <img src="logo-unidos.png" alt="Unidos">
+    <div>
+      <div class="ub-name">Unidos por Gran Canaria</div>
+      <div class="ub-sub">Gáldar · Gran Canaria</div>
+    </div>
   </div>
 
   <div class="content">
@@ -220,17 +221,16 @@ var link = document.createElement('link'); link.rel='manifest'; link.href=URL.cr
 
     <div class="section-title">🛠 Partidas de trabajo</div>
     <div id="partides-container"></div>
-
     <div class="add-btns">
-      <button class="add-partida-btn" onclick="afegirPartida(false)">📋 Partida Durcaplast</button>
+      <button class="add-partida-btn" onclick="afegirPartida(false)">📋 Partida típica</button>
       <button class="add-libre-btn" onclick="afegirPartida(true)">✏️ Partida libre</button>
     </div>
 
     <div class="section-title">💶 Resumen económico</div>
     <div class="summary-card">
       <div class="sum-row"><span>Subtotal (sin IVA)</span><span id="sum-base">0,00 €</span></div>
-      <div class="iva-row"><label>IVA:</label><select id="iva-sel" onchange="calcular()"><option value="0">Sin IVA</option><option value="10" selected>IVA 10% (Reducido)</option><option value="21">IVA 21% (General)</option></select></div>
-      <div class="sum-row"><span>Importe IVA</span><span id="sum-iva">0,00 €</span></div>
+      <div class="iva-row"><label>IVA:</label><select id="iva-sel" onchange="calcular()"><option value="0">Sin IVA</option><option value="7" selected>IGIC 7% (Canarias)</option><option value="10">IVA 10% (Reducido)</option><option value="21">IVA 21% (General)</option></select></div>
+      <div class="sum-row"><span>Importe IGIC/IVA</span><span id="sum-iva">0,00 €</span></div>
       <div class="sum-row total"><span>TOTAL</span><span id="sum-total">0,00 €</span></div>
     </div>
 
@@ -240,24 +240,25 @@ var link = document.createElement('link'); link.rel='manifest'; link.href=URL.cr
     </div>
 
     <div class="color-btns">
-      <button onclick="abrirCarta('durc')" style="border:2px solid #2d7a2d;background:white;color:#2d7a2d;">🟢 Durcaplast</button>
-      <button onclick="abrirCarta('ncs')" style="border:2px solid #1a5ea6;background:white;color:#1a5ea6;">🎨 NCS</button>
-      <button onclick="abrirCarta('ral')" style="border:2px solid #c0392b;background:white;color:#c0392b;">🎨 RAL</button>
+      <button onclick="abrirCarta('ncs')" style="border:2px solid #1a5ea6;background:white;color:#1a5ea6;">🎨 Carta NCS</button>
+      <button onclick="abrirCarta('ral')" style="border:2px solid #c0392b;background:white;color:#c0392b;">🎨 Carta RAL</button>
     </div>
 
     <div id="pwa-install-bar" style="display:none;margin-bottom:16px;">
-      <button id="btnInstalar" onclick="instalarPWA()" style="width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#2d7a2d,#1a4d1a);color:white;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;">📲 Instalar DurcaplastApp</button>
+      <button onclick="instalarPWA()" style="width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#1a3d8f,#0a1a4a);color:white;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;">📲 Instalar PintorApp</button>
     </div>
 
-    <div class="robert-footer">
-      <img src="icono-durcaplast.png" class="rf-logo" alt="Durcaplast">
-      <div class="rf-info"><strong>Durcaplast · Fábrica de Pinturas</strong><span>Calidad profesional desde 1990 · Dúrcal, Granada</span></div>
-      <a class="rf-call" href="https://durcaplast.com" target="_blank">🌐 Web</a>
+    <div class="unidos-footer">
+      <img src="logo-unidos.png" style="width:56px;height:56px;object-fit:contain;flex-shrink:0;" alt="Unidos">
+      <div class="rf-info">
+        <strong>Unidos por Gran Canaria</strong>
+        <span>Gáldar · Gran Canaria</span>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL CARTA DE COLORES UNIFICADO -->
+<!-- MODAL CARTAS DE COLOR -->
 <div id="color-modal" class="color-modal">
   <div class="color-modal-inner">
     <div class="color-modal-hdr" id="modal-hdr">
@@ -272,70 +273,20 @@ var link = document.createElement('link'); link.rel='manifest'; link.href=URL.cr
 </div>
 
 <script>
-// ─── UTILS ────────────────────────────────────────────────────────────────────
-function hexToRgb(hex) {
-  var r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return r ? {r:parseInt(r[1],16), g:parseInt(r[2],16), b:parseInt(r[3],16)} : {r:0,g:0,b:0};
-}
-function hexToRgbStr(hex) { var c=hexToRgb(hex); return 'RGB('+c.r+', '+c.g+', '+c.b+')'; }
-function fmt(n) { return n.toFixed(2).replace('.', ',') + ' €'; }
+function hexToRgb(hex) { var r=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex); return r?{r:parseInt(r[1],16),g:parseInt(r[2],16),b:parseInt(r[3],16)}:{r:0,g:0,b:0}; }
+function fmt(n) { return n.toFixed(2).replace('.',',')+' €'; }
 function showToast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2800); }
 
-// ─── DATA ─────────────────────────────────────────────────────────────────────
-var PARTIDES_DURC = ['Encintado y Protección Previa','Saneado del Soporte','Fijador Durcaplast (Imper-Durcaplast)','Pintura Plástica Interior Durcaplast','Pintura Plástica Exterior Durcaplast','Pintura Fachadas Colores Durcaplast','Revestimiento Liso Fachada Durcaplast','Impermeabilizante Atienza Durcaplast','Esmalte Puertas y Ventanas','Barniz Madera','Pintura Suelos Durcaplast','Pintura Piscinas Durcaplast','Gotele / Proyectado','Antimoho Durcaplast','Imprimación / Sellador','Desplazamiento','Preparación Superficie','Montaje/Desmontaje Andamio','Limpieza Final'];
+var PARTIDES_TIPIQUES = [
+  'Encintado y Protección Previa','Saneado del Soporte','Imprimación / Sellador',
+  'Pintura Plástica Interior','Pintura Plástica Exterior','Pintura Fachadas',
+  'Revestimiento Liso Fachada','Impermeabilizante','Esmalte Puertas y Ventanas',
+  'Barniz Madera','Pintura Suelos','Pintura Piscina','Gotele / Proyectado',
+  'Antimoho','Desplazamiento','Preparación Superficie',
+  'Montaje/Desmontaje Andamio','Limpieza Final'
+];
 
 var CARTAS = {
-  durc: {
-    titulo: '🟢 Carta Durcaplast',
-    accentColor: '#2d7a2d',
-    footer: 'Durcaplast · 44 colores · Fábrica de Pinturas desde 1990',
-    data: [
-      {codigo:'D-01',nombre:'Blanco Puro',familia:'Blancos',hex:'#F5F5F5',producto:'Plástica Int/Ext'},
-      {codigo:'D-02',nombre:'Blanco Hueso',familia:'Blancos',hex:'#F2EFE4',producto:'Plástica Int/Ext'},
-      {codigo:'D-03',nombre:'Blanco Roto',familia:'Blancos',hex:'#EDE9DC',producto:'Fachadas'},
-      {codigo:'D-04',nombre:'Blanco Nácar',familia:'Blancos',hex:'#F0EDE5',producto:'Plástica Interior'},
-      {codigo:'D-10',nombre:'Crema',familia:'Beiges',hex:'#F0E0B0',producto:'Fachadas'},
-      {codigo:'D-11',nombre:'Beige Claro',familia:'Beiges',hex:'#E8D5A0',producto:'Fachadas'},
-      {codigo:'D-12',nombre:'Albero',familia:'Beiges',hex:'#D4B870',producto:'Fachadas'},
-      {codigo:'D-13',nombre:'Arena',familia:'Beiges',hex:'#C8A85A',producto:'Fachadas'},
-      {codigo:'D-14',nombre:'Vainilla',familia:'Beiges',hex:'#EED898',producto:'Plástica Interior'},
-      {codigo:'D-15',nombre:'Mantequilla',familia:'Beiges',hex:'#F0DC90',producto:'Plástica Interior'},
-      {codigo:'D-20',nombre:'Amarillo Suave',familia:'Amarillos',hex:'#F5E060',producto:'Plástica Interior'},
-      {codigo:'D-21',nombre:'Amarillo Sol',familia:'Amarillos',hex:'#F0C830',producto:'Fachadas'},
-      {codigo:'D-22',nombre:'Amarillo Ocre',familia:'Amarillos',hex:'#D4A020',producto:'Fachadas'},
-      {codigo:'D-30',nombre:'Salmón Claro',familia:'Salmones',hex:'#F4B090',producto:'Fachadas'},
-      {codigo:'D-31',nombre:'Salmón',familia:'Salmones',hex:'#F09070',producto:'Fachadas'},
-      {codigo:'D-32',nombre:'Salmón Oscuro',familia:'Salmones',hex:'#E07050',producto:'Fachadas'},
-      {codigo:'D-33',nombre:'Melocotón',familia:'Salmones',hex:'#F8C090',producto:'Plástica Interior'},
-      {codigo:'D-34',nombre:'Albaricoque',familia:'Salmones',hex:'#F0A870',producto:'Fachadas'},
-      {codigo:'D-40',nombre:'Terracota Claro',familia:'Terracotas',hex:'#D08060',producto:'Fachadas'},
-      {codigo:'D-41',nombre:'Terracota',familia:'Terracotas',hex:'#C06840',producto:'Fachadas'},
-      {codigo:'D-42',nombre:'Terracota Oscuro',familia:'Terracotas',hex:'#A85030',producto:'Fachadas'},
-      {codigo:'D-43',nombre:'Teja',familia:'Terracotas',hex:'#B86040',producto:'Fachadas'},
-      {codigo:'D-44',nombre:'Rojo Óxido',familia:'Terracotas',hex:'#983020',producto:'Fachadas'},
-      {codigo:'D-50',nombre:'Marrón Claro',familia:'Marrones',hex:'#C09060',producto:'Fachadas'},
-      {codigo:'D-51',nombre:'Marrón Tierra',familia:'Marrones',hex:'#A07040',producto:'Fachadas'},
-      {codigo:'D-52',nombre:'Marrón Oscuro',familia:'Marrones',hex:'#806030',producto:'Fachadas'},
-      {codigo:'D-53',nombre:'Chocolate',familia:'Marrones',hex:'#604020',producto:'Fachadas'},
-      {codigo:'D-60',nombre:'Gris Perla',familia:'Grises',hex:'#E0E0E0',producto:'Plástica Int/Ext'},
-      {codigo:'D-61',nombre:'Gris Plata',familia:'Grises',hex:'#C8C8C8',producto:'Plástica Int/Ext'},
-      {codigo:'D-62',nombre:'Gris Medio',familia:'Grises',hex:'#A8A8A8',producto:'Fachadas'},
-      {codigo:'D-63',nombre:'Gris Oscuro',familia:'Grises',hex:'#787878',producto:'Fachadas'},
-      {codigo:'D-64',nombre:'Gris Antracita',familia:'Grises',hex:'#484848',producto:'Fachadas'},
-      {codigo:'D-65',nombre:'Gris Neutro',familia:'Grises',hex:'#909090',producto:'Plástica Int/Ext'},
-      {codigo:'D-70',nombre:'Verde Claro',familia:'Verdes',hex:'#90C890',producto:'Plástica Interior'},
-      {codigo:'D-71',nombre:'Verde Salvia',familia:'Verdes',hex:'#70A870',producto:'Fachadas'},
-      {codigo:'D-72',nombre:'Verde Oscuro',familia:'Verdes',hex:'#407840',producto:'Fachadas'},
-      {codigo:'D-73',nombre:'Verde Musgo',familia:'Verdes',hex:'#506050',producto:'Fachadas'},
-      {codigo:'D-80',nombre:'Azul Celeste',familia:'Azules',hex:'#A0C8E8',producto:'Plástica Interior'},
-      {codigo:'D-81',nombre:'Azul Suave',familia:'Azules',hex:'#7098C0',producto:'Plástica Interior'},
-      {codigo:'D-82',nombre:'Azul Medio',familia:'Azules',hex:'#4070A8',producto:'Fachadas'},
-      {codigo:'D-83',nombre:'Azul Marino',familia:'Azules',hex:'#204878',producto:'Fachadas'},
-      {codigo:'D-90',nombre:'Rosa Suave',familia:'Rosas',hex:'#F0C0C0',producto:'Plástica Interior'},
-      {codigo:'D-91',nombre:'Rosa',familia:'Rosas',hex:'#E09898',producto:'Plástica Interior'},
-      {codigo:'D-92',nombre:'Lila',familia:'Rosas',hex:'#D0A0C8',producto:'Plástica Interior'}
-    ]
-  },
   ncs: {
     titulo: '🎨 Carta NCS',
     accentColor: '#1a5ea6',
@@ -367,344 +318,186 @@ var CARTAS = {
   }
 };
 
-// ─── APP STATE ────────────────────────────────────────────────────────────────
-var userData = null;
-var partides = [];
-var partidaId = 0;
-var logoBase64 = null;
-var cartaActiva = 'durc';
-var familiaActiva = 'Todos';
+var userData=null, partides=[], partidaId=0, logoBase64=null, cartaActiva='ncs', familiaActiva='Todos';
+var selectedColor='#1a3d8f';
 
-window.onload = function() {
-  var saved = localStorage.getItem('pintor_user');
-  if (saved) { userData = JSON.parse(saved); iniciarApp(); }
-  var today = new Date().toISOString().split('T')[0];
-  var df = document.getElementById('cli-data'); if (df) df.value = today;
+window.onload=function(){
+  var saved=localStorage.getItem('pintor_unidos');
+  if(saved){userData=JSON.parse(saved);iniciarApp();}
+  var df=document.getElementById('cli-data'); if(df) df.value=new Date().toISOString().split('T')[0];
 };
 
-var selectedColor = '#2d7a2d';
-function selColor(el) { document.querySelectorAll('.color-opt').forEach(function(c){c.classList.remove('sel');}); el.classList.add('sel'); selectedColor = el.getAttribute('data-color'); }
+function selColor(el){document.querySelectorAll('.color-opt').forEach(function(c){c.classList.remove('sel');});el.classList.add('sel');selectedColor=el.getAttribute('data-color');}
 
-function cargarLogo(input) {
-  var file = input.files[0]; if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) { logoBase64 = e.target.result; var prev=document.getElementById('logo-preview'); prev.innerHTML='<img src="'+logoBase64+'" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">'; };
-  reader.readAsDataURL(file);
+function cargarLogo(input){var file=input.files[0];if(!file)return;var r=new FileReader();r.onload=function(e){logoBase64=e.target.result;document.getElementById('logo-preview').innerHTML='<img src="'+logoBase64+'" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">';};r.readAsDataURL(file);}
+
+function crearApp(){
+  var nom=document.getElementById('s-nom').value.trim();
+  if(!nom){showToast('⚠️ Escribe tu nombre o empresa');return;}
+  userData={nom:nom,tel:document.getElementById('s-tel').value.trim(),pob:document.getElementById('s-pob').value.trim(),esp:document.getElementById('s-esp').value,color:selectedColor,logo:logoBase64};
+  localStorage.setItem('pintor_unidos',JSON.stringify(userData));iniciarApp();
 }
 
-function crearApp() {
-  var nom = document.getElementById('s-nom').value.trim();
-  if (!nom) { showToast('⚠️ Escribe tu nombre o empresa'); return; }
-  userData = { nom: nom, tel: document.getElementById('s-tel').value.trim(), pob: document.getElementById('s-pob').value.trim(), esp: document.getElementById('s-esp').value, color: selectedColor, logo: logoBase64 };
-  localStorage.setItem('pintor_user', JSON.stringify(userData));
-  iniciarApp();
+function iniciarApp(){
+  document.getElementById('setup-screen').style.display='none';
+  document.getElementById('main-app').style.display='block';
+  document.documentElement.style.setProperty('--primary',userData.color);
+  var hi=document.getElementById('header-initials');
+  if(userData.logo){hi.innerHTML='<img src="'+userData.logo+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';hi.style.background='transparent';}
+  else{hi.textContent=userData.nom.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();}
+  document.getElementById('header-name').textContent=userData.nom;
+  document.getElementById('header-sub').textContent=userData.esp||'PintorApp Gáldar';
+  document.getElementById('app-header').style.background=userData.color;
+  var df=document.getElementById('cli-data');if(df&&!df.value)df.value=new Date().toISOString().split('T')[0];
+  if(userData.logo)logoBase64=userData.logo;
+  if(partides.length===0)afegirPartida(false);
 }
 
-function iniciarApp() {
-  document.getElementById('setup-screen').style.display = 'none';
-  document.getElementById('main-app').style.display = 'block';
-  document.documentElement.style.setProperty('--primary', userData.color);
-  var initials = userData.nom.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
-  var hi = document.getElementById('header-initials');
-  if (userData.logo) { hi.innerHTML='<img src="'+userData.logo+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">'; hi.style.background='transparent'; }
-  else { hi.textContent=initials; hi.style.background='rgba(255,255,255,0.25)'; }
-  document.getElementById('header-name').textContent = userData.nom;
-  document.getElementById('header-sub').textContent = userData.esp || 'DurcaplastApp';
-  document.getElementById('app-header').style.background = userData.color;
-  var today = new Date().toISOString().split('T')[0];
-  var df = document.getElementById('cli-data'); if (df && !df.value) df.value = today;
-  if (userData.logo) logoBase64 = userData.logo;
-  if (partides.length === 0) afegirPartida(false);
+function resetApp(){if(!confirm('¿Cambiar datos?'))return;localStorage.removeItem('pintor_unidos');userData=null;document.getElementById('main-app').style.display='none';document.getElementById('setup-screen').style.display='flex';}
+
+function afegirPartida(libre){var id=++partidaId;partides.push({id:id,nom:'',cant:0,preu:0,libre:!!libre});renderPartides();if(!libre)setTimeout(function(){triarPartida(id);},100);}
+
+function renderPartides(){
+  var c=document.getElementById('partides-container');if(!c)return;c.innerHTML='';
+  partides.forEach(function(p){
+    var div=document.createElement('div');div.className='partida-card';div.setAttribute('data-pid',p.id);
+    if(p.libre)div.style.borderLeftColor='#f59e0b';
+    var top=document.createElement('div');top.className='partida-top';
+    if(!p.libre){var sb=document.createElement('button');sb.className='mic-btn';sb.style.background='#eff6ff';sb.style.color='#1a3d8f';sb.textContent='📋';(function(pid){sb.addEventListener('click',function(){triarPartida(pid);});})(p.id);top.appendChild(sb);}
+    else{var lt=document.createElement('div');lt.style.cssText='width:32px;height:32px;border-radius:8px;background:#fffbeb;border:1px solid #f59e0b;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;';lt.textContent='✏️';top.appendChild(lt);}
+    var ni=document.createElement('input');ni.className='partida-name';ni.placeholder=p.libre?'Escribe tu concepto...':'Descripción de la partida...';ni.value=p.nom;
+    (function(pid){ni.addEventListener('input',function(){updatePartida(pid,'nom',this.value);});})(p.id);
+    var mn=document.createElement('button');mn.className='mic-btn';mn.textContent='🎤';addVozListener(mn,ni,false);
+    var db=document.createElement('button');db.className='btn-del';db.textContent='✕';(function(pid){db.addEventListener('click',function(){eliminarPartida(pid);});})(p.id);
+    top.appendChild(ni);top.appendChild(mn);top.appendChild(db);
+    var nums=document.createElement('div');nums.className='partida-nums';
+    var cr=document.createElement('div');cr.className='num-row';var cl=document.createElement('label');cl.textContent='Cant.';
+    var ci=document.createElement('input');ci.type='number';ci.min='0';ci.step='0.01';ci.placeholder='0';ci.value=p.cant>0?p.cant:'';
+    (function(pid){ci.addEventListener('input',function(){updatePartida(pid,'cant',parseFloat(this.value)||0);calcular();});})(p.id);
+    var mc=document.createElement('button');mc.className='num-mic';mc.textContent='🎤';addVozListener(mc,ci,true);
+    cr.appendChild(cl);cr.appendChild(ci);cr.appendChild(mc);
+    var pr=document.createElement('div');pr.className='num-row';var pl=document.createElement('label');pl.textContent='Precio €';
+    var pi=document.createElement('input');pi.type='number';pi.min='0';pi.step='0.01';pi.placeholder='0,00';pi.value=p.preu>0?p.preu:'';
+    (function(pid){pi.addEventListener('input',function(){updatePartida(pid,'preu',parseFloat(this.value)||0);calcular();});})(p.id);
+    var mp=document.createElement('button');mp.className='num-mic';mp.textContent='🎤';addVozListener(mp,pi,true);
+    pr.appendChild(pl);pr.appendChild(pi);pr.appendChild(mp);
+    nums.appendChild(cr);nums.appendChild(pr);div.appendChild(top);div.appendChild(nums);c.appendChild(div);
+  });calcular();
 }
 
-function resetApp() {
-  if (!confirm('¿Quieres cambiar tus datos?')) return;
-  localStorage.removeItem('pintor_user'); userData = null;
-  document.getElementById('main-app').style.display = 'none';
-  document.getElementById('setup-screen').style.display = 'flex';
-}
-
-// ─── PARTIDAS ─────────────────────────────────────────────────────────────────
-function afegirPartida(libre) {
-  var id = ++partidaId;
-  partides.push({ id: id, nom: '', cant: 0, preu: 0, libre: !!libre });
-  renderPartides();
-  // Si es Durcaplast, abrir selector
-  if (!libre) setTimeout(function(){ triarPartida(id); }, 100);
-}
-
-function renderPartides() {
-  var c = document.getElementById('partides-container'); if (!c) return;
-  c.innerHTML = '';
-  partides.forEach(function(p) {
-    var div = document.createElement('div');
-    div.className = 'partida-card';
-    div.setAttribute('data-pid', p.id);
-    if (p.libre) div.style.borderLeftColor = '#f59e0b';
-
-    var topDiv = document.createElement('div'); topDiv.className = 'partida-top';
-
-    // Botón tipo (solo en partidas Durcaplast)
-    if (!p.libre) {
-      var selBtn = document.createElement('button');
-      selBtn.className = 'mic-btn'; selBtn.style.background='#f0fdf4'; selBtn.style.color='#059669'; selBtn.textContent='📋'; selBtn.title='Elegir partida';
-      (function(pid){ selBtn.addEventListener('click', function(){ triarPartida(pid); }); })(p.id);
-      topDiv.appendChild(selBtn);
-    } else {
-      var libreTag = document.createElement('div');
-      libreTag.style.cssText='width:32px;height:32px;border-radius:8px;background:#fffbeb;border:1px solid #f59e0b;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;';
-      libreTag.textContent='✏️'; libreTag.title='Partida libre';
-      topDiv.appendChild(libreTag);
-    }
-
-    var nameInp = document.createElement('input'); nameInp.className='partida-name';
-    nameInp.placeholder = p.libre ? 'Escribe tu concepto...' : 'Descripción de la partida...';
-    nameInp.value = p.nom;
-    (function(pid){ nameInp.addEventListener('input', function(){ updatePartida(pid,'nom',this.value); }); })(p.id);
-
-    var micName = document.createElement('button'); micName.className='mic-btn'; micName.textContent='🎤';
-    addVozListener(micName, nameInp, false);
-
-    var delBtn = document.createElement('button'); delBtn.className='btn-del'; delBtn.textContent='✕';
-    (function(pid){ delBtn.addEventListener('click', function(){ eliminarPartida(pid); }); })(p.id);
-
-    topDiv.appendChild(nameInp); topDiv.appendChild(micName); topDiv.appendChild(delBtn);
-
-    var numsDiv = document.createElement('div'); numsDiv.className='partida-nums';
-
-    // Cant
-    var cantRow = document.createElement('div'); cantRow.className='num-row';
-    var cantLabel = document.createElement('label'); cantLabel.textContent='Cant.';
-    var cantInp = document.createElement('input'); cantInp.type='number'; cantInp.min='0'; cantInp.step='0.01'; cantInp.placeholder='0'; cantInp.value=p.cant>0?p.cant:'';
-    (function(pid){ cantInp.addEventListener('input', function(){ updatePartida(pid,'cant',parseFloat(this.value)||0); calcular(); }); })(p.id);
-    var micCant = document.createElement('button'); micCant.className='num-mic'; micCant.textContent='🎤';
-    addVozListener(micCant, cantInp, true);
-    cantRow.appendChild(cantLabel); cantRow.appendChild(cantInp); cantRow.appendChild(micCant);
-
-    // Preu
-    var preuRow = document.createElement('div'); preuRow.className='num-row';
-    var preuLabel = document.createElement('label'); preuLabel.textContent='Precio €';
-    var preuInp = document.createElement('input'); preuInp.type='number'; preuInp.min='0'; preuInp.step='0.01'; preuInp.placeholder='0,00'; preuInp.value=p.preu>0?p.preu:'';
-    (function(pid){ preuInp.addEventListener('input', function(){ updatePartida(pid,'preu',parseFloat(this.value)||0); calcular(); }); })(p.id);
-    var micPreu = document.createElement('button'); micPreu.className='num-mic'; micPreu.textContent='🎤';
-    addVozListener(micPreu, preuInp, true);
-    preuRow.appendChild(preuLabel); preuRow.appendChild(preuInp); preuRow.appendChild(micPreu);
-
-    numsDiv.appendChild(cantRow); numsDiv.appendChild(preuRow);
-    div.appendChild(topDiv); div.appendChild(numsDiv);
-    c.appendChild(div);
-  });
-  calcular();
-}
-
-function triarPartida(pid) {
-  var existing = document.getElementById('partida-modal'); if (existing) existing.remove();
-  var modal = document.createElement('div');
-  modal.id='partida-modal';
+function triarPartida(pid){
+  var ex=document.getElementById('partida-modal');if(ex)ex.remove();
+  var modal=document.createElement('div');modal.id='partida-modal';
   modal.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);display:flex;align-items:flex-end;justify-content:center;';
-  modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
-  var box = document.createElement('div');
-  box.style.cssText='background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:500px;max-height:78vh;overflow-y:auto;';
-  var hdr = document.createElement('div');
-  hdr.style.cssText='padding:16px 20px 12px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;border-radius:20px 20px 0 0;';
-  var titulo = document.createElement('span'); titulo.textContent='Seleccionar tipo de trabajo'; titulo.style.cssText='font-size:15px;font-weight:700;color:#0f172a;';
-  var btnC = document.createElement('button'); btnC.textContent='✕'; btnC.style.cssText='background:#f1f5f9;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;color:#64748b;';
-  btnC.addEventListener('click', function(){ modal.remove(); });
-  hdr.appendChild(titulo); hdr.appendChild(btnC); box.appendChild(hdr);
-
-  PARTIDES_DURC.forEach(function(nom) {
-    var item = document.createElement('div');
-    item.style.cssText='padding:13px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid #f8fafc;';
-    var ico = document.createElement('div'); ico.style.cssText='width:36px;height:36px;border-radius:9px;background:#f0fdf4;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;'; ico.textContent='🎨';
-    var txt = document.createElement('span'); txt.textContent=nom; txt.style.cssText='flex:1;font-size:14px;font-weight:500;color:#0f172a;';
-    item.appendChild(ico); item.appendChild(txt);
-    item.addEventListener('click', function(){
-      updatePartida(pid,'nom',nom);
-      var card=document.querySelector('[data-pid="'+pid+'"]');
-      if (card){ var ni=card.querySelector('.partida-name'); if(ni) ni.value=nom; }
-      modal.remove();
-    });
-    item.addEventListener('mouseover',function(){item.style.background='#f0fdf4';});
-    item.addEventListener('mouseout',function(){item.style.background='';});
+  modal.addEventListener('click',function(e){if(e.target===modal)modal.remove();});
+  var box=document.createElement('div');box.style.cssText='background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:500px;max-height:78vh;overflow-y:auto;';
+  var hdr=document.createElement('div');hdr.style.cssText='padding:16px 20px 12px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;border-radius:20px 20px 0 0;';
+  var tit=document.createElement('span');tit.textContent='Seleccionar tipo de trabajo';tit.style.cssText='font-size:15px;font-weight:700;color:#0f172a;';
+  var bc=document.createElement('button');bc.textContent='✕';bc.style.cssText='background:#f1f5f9;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;';bc.addEventListener('click',function(){modal.remove();});
+  hdr.appendChild(tit);hdr.appendChild(bc);box.appendChild(hdr);
+  PARTIDES_TIPIQUES.forEach(function(nom){
+    var item=document.createElement('div');item.style.cssText='padding:13px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid #f8fafc;';
+    var ico=document.createElement('div');ico.style.cssText='width:36px;height:36px;border-radius:9px;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;';ico.textContent='🖌';
+    var txt=document.createElement('span');txt.textContent=nom;txt.style.cssText='flex:1;font-size:14px;font-weight:500;color:#0f172a;';
+    item.appendChild(ico);item.appendChild(txt);
+    item.addEventListener('click',function(){updatePartida(pid,'nom',nom);var card=document.querySelector('[data-pid="'+pid+'"]');if(card){var n=card.querySelector('.partida-name');if(n)n.value=nom;}modal.remove();});
+    item.addEventListener('mouseover',function(){item.style.background='#eff6ff';});item.addEventListener('mouseout',function(){item.style.background='';});
     box.appendChild(item);
-  });
-  modal.appendChild(box); document.body.appendChild(modal);
+  });modal.appendChild(box);document.body.appendChild(modal);
 }
 
-function updatePartida(pid, field, val) { var p=partides.find(function(x){return x.id===pid;}); if(p) p[field]=val; calcular(); }
-function eliminarPartida(pid) { partides=partides.filter(function(p){return p.id!==pid;}); renderPartides(); }
+function updatePartida(pid,field,val){var p=partides.find(function(x){return x.id===pid;});if(p)p[field]=val;calcular();}
+function eliminarPartida(pid){partides=partides.filter(function(p){return p.id!==pid;});renderPartides();}
 
-// ─── CARTAS DE COLOR ──────────────────────────────────────────────────────────
-function abrirCarta(tipo) {
-  cartaActiva = tipo; familiaActiva = 'Todos';
-  var carta = CARTAS[tipo];
-  var modal = document.getElementById('color-modal');
-  var hdr = document.getElementById('modal-hdr');
-  hdr.style.background = carta.accentColor;
-  document.getElementById('modal-titulo').style.color = 'white';
-  document.getElementById('modal-titulo').textContent = carta.titulo;
-  document.getElementById('modal-footer').textContent = carta.footer;
-  document.getElementById('modal-search').value = '';
-  modal.style.display = 'flex';
-  renderFamilias(); renderLista(carta.data);
+function abrirCarta(tipo){
+  cartaActiva=tipo;familiaActiva='Todos';
+  var carta=CARTAS[tipo];
+  document.getElementById('modal-hdr').style.background=carta.accentColor;
+  document.getElementById('modal-titulo').style.color='white';
+  document.getElementById('modal-titulo').textContent=carta.titulo;
+  document.getElementById('modal-footer').textContent=carta.footer;
+  document.getElementById('modal-search').value='';
+  document.getElementById('color-modal').style.display='flex';
+  renderFamilias();renderLista(carta.data);
 }
+function cerrarCarta(){document.getElementById('color-modal').style.display='none';}
 
-function cerrarCarta() { document.getElementById('color-modal').style.display='none'; }
-
-function renderFamilias() {
-  var carta = CARTAS[cartaActiva];
-  var cont = document.getElementById('modal-familias');
-  var familias = ['Todos'];
-  carta.data.forEach(function(c){ if(familias.indexOf(c.familia)===-1) familias.push(c.familia); });
-  cont.innerHTML = '';
-  familias.forEach(function(f) {
-    var btn = document.createElement('button');
-    btn.textContent = f;
-    var activo = f === familiaActiva;
-    var ac = carta.accentColor;
+function renderFamilias(){
+  var carta=CARTAS[cartaActiva],cont=document.getElementById('modal-familias'),familias=['Todos'];
+  carta.data.forEach(function(c){if(familias.indexOf(c.familia)===-1)familias.push(c.familia);});
+  cont.innerHTML='';
+  familias.forEach(function(f){
+    var btn=document.createElement('button');btn.textContent=f;var activo=f===familiaActiva;var ac=carta.accentColor;
     btn.style.cssText='padding:5px 12px;border-radius:20px;border:1.5px solid '+(activo?ac:'#e2e8f0')+';background:'+(activo?ac:'white')+';color:'+(activo?'white':'#374151')+';font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:"DM Sans",sans-serif;';
-    btn.addEventListener('click', function(){ familiaActiva=f; renderFamilias(); filtrarCarta(document.getElementById('modal-search').value); });
+    btn.addEventListener('click',function(){familiaActiva=f;renderFamilias();filtrarCarta(document.getElementById('modal-search').value);});
     cont.appendChild(btn);
   });
 }
+function filtrarCarta(busca){busca=busca.toLowerCase().trim();var carta=CARTAS[cartaActiva];renderLista(carta.data.filter(function(c){return(familiaActiva==='Todos'||c.familia===familiaActiva)&&(!busca||c.codigo.toLowerCase().includes(busca)||c.nombre.toLowerCase().includes(busca));}));}
 
-function filtrarCarta(busca) {
-  busca = busca.toLowerCase().trim();
-  var carta = CARTAS[cartaActiva];
-  renderLista(carta.data.filter(function(c){
-    return (familiaActiva==='Todos'||c.familia===familiaActiva) && (!busca||c.codigo.toLowerCase().includes(busca)||c.nombre.toLowerCase().includes(busca));
-  }));
-}
-
-function renderLista(lista) {
-  var cont = document.getElementById('modal-lista'); cont.innerHTML = '';
-  if (!lista.length) { cont.innerHTML='<div style="text-align:center;padding:40px;color:#94a3b8;">No se encontraron colores</div>'; return; }
-  var ac = CARTAS[cartaActiva].accentColor;
-  lista.forEach(function(color) {
-    var rgb = hexToRgb(color.hex);
-    var rgbStr = 'RGB('+rgb.r+', '+rgb.g+', '+rgb.b+')';
-    var item = document.createElement('div');
-    item.style.cssText='padding:10px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid #f8fafc;';
-    var muestra = document.createElement('div');
-    muestra.style.cssText='width:48px;height:48px;border-radius:10px;background:'+color.hex+';flex-shrink:0;border:1px solid rgba(0,0,0,0.1);';
-    var info = document.createElement('div'); info.style.cssText='flex:1;min-width:0;';
-    var sub = color.producto ? '· '+color.producto : '· '+color.familia;
-    info.innerHTML=
-      '<div style="font-size:14px;font-weight:600;color:#0f172a;">'+color.nombre+'</div>'+
-      '<div style="font-size:11px;color:#94a3b8;font-family:monospace;">'+color.codigo+'</div>'+
-      '<div style="font-size:11px;color:#64748b;">'+color.hex.toUpperCase()+' &nbsp;·&nbsp; <span style="color:#2d7a2d;font-weight:600;">'+rgbStr+'</span></div>';
-    var btnC = document.createElement('button');
-    btnC.style.cssText='background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:600;color:'+ac+';cursor:pointer;flex-shrink:0;';
-    btnC.textContent='Copiar';
-    btnC.addEventListener('click', function(e){
-      e.stopPropagation();
-      var txt = color.codigo+' · '+color.nombre+' · '+color.hex.toUpperCase()+' · '+rgbStr;
-      if(navigator.clipboard) navigator.clipboard.writeText(txt);
-      showToast('📋 '+color.codigo+' copiado');
-    });
-    item.appendChild(muestra); item.appendChild(info); item.appendChild(btnC);
-    item.addEventListener('click', function(){
-      var txt = color.codigo+' · '+color.nombre+' · '+color.hex.toUpperCase()+' · '+rgbStr;
-      if(navigator.clipboard) navigator.clipboard.writeText(txt);
-      showToast('🎨 '+color.codigo+' · '+rgbStr);
-      cerrarCarta();
-    });
-    item.addEventListener('mouseover',function(){item.style.background='#f8fafc';});
-    item.addEventListener('mouseout',function(){item.style.background='';});
+function renderLista(lista){
+  var cont=document.getElementById('modal-lista');cont.innerHTML='';
+  if(!lista.length){cont.innerHTML='<div style="text-align:center;padding:40px;color:#94a3b8;">No se encontraron colores</div>';return;}
+  var ac=CARTAS[cartaActiva].accentColor;
+  lista.forEach(function(color){
+    var rgb=hexToRgb(color.hex);var rgbStr='RGB('+rgb.r+', '+rgb.g+', '+rgb.b+')';
+    var item=document.createElement('div');item.style.cssText='padding:10px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid #f8fafc;';
+    var m=document.createElement('div');m.style.cssText='width:48px;height:48px;border-radius:10px;background:'+color.hex+';flex-shrink:0;border:1px solid rgba(0,0,0,0.1);';
+    var info=document.createElement('div');info.style.cssText='flex:1;min-width:0;';
+    info.innerHTML='<div style="font-size:14px;font-weight:600;color:#0f172a;">'+color.nombre+'</div><div style="font-size:11px;color:#94a3b8;font-family:monospace;">'+color.codigo+'</div><div style="font-size:11px;color:#64748b;">'+color.hex.toUpperCase()+' &nbsp;·&nbsp; <span style="color:#1a3d8f;font-weight:600;">'+rgbStr+'</span></div>';
+    var btnC=document.createElement('button');btnC.style.cssText='background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:600;color:'+ac+';cursor:pointer;flex-shrink:0;';btnC.textContent='Copiar';
+    btnC.addEventListener('click',function(e){e.stopPropagation();var txt=color.codigo+' · '+color.nombre+' · '+color.hex.toUpperCase()+' · '+rgbStr;if(navigator.clipboard)navigator.clipboard.writeText(txt);showToast('📋 '+color.codigo+' copiado');});
+    item.appendChild(m);item.appendChild(info);item.appendChild(btnC);
+    item.addEventListener('click',function(){var txt=color.codigo+' · '+color.nombre+' · '+color.hex.toUpperCase()+' · '+rgbStr;if(navigator.clipboard)navigator.clipboard.writeText(txt);showToast('🎨 '+color.codigo+' · '+rgbStr);cerrarCarta();});
+    item.addEventListener('mouseover',function(){item.style.background='#f8fafc';});item.addEventListener('mouseout',function(){item.style.background='';});
     cont.appendChild(item);
   });
 }
 
-// ─── VOZ ──────────────────────────────────────────────────────────────────────
-var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-var activeBtn = null;
-function addVozListener(btn, inp, isNumber) {
-  var isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
-  btn.addEventListener(isMobile?'touchstart':'click', function(e){ e.preventDefault(); e.stopPropagation(); iniciarVoz(inp,btn,isNumber); }, {passive:false});
-}
-function iniciarVoz(inp, btn, isNumber) {
-  if (!SpeechRec) { showToast('⚠️ Tu navegador no soporta la voz'); return; }
-  if (activeBtn && activeBtn!==btn) activeBtn.classList.remove('listening');
-  if (btn.classList.contains('listening')) { btn.classList.remove('listening'); document.getElementById('listen-overlay').style.display='none'; activeBtn=null; return; }
-  var rec = new SpeechRec(); rec.lang='es-ES'; rec.interimResults=false; rec.maxAlternatives=3;
-  btn.classList.add('listening'); document.getElementById('listen-overlay').style.display='block'; activeBtn=btn;
-  rec.onresult = function(e) {
-    var transcript=''; for(var i=0;i<e.results[0].length;i++){var t=e.results[0][i].transcript.trim();if(t){transcript=t;break;}}
-    btn.classList.remove('listening'); document.getElementById('listen-overlay').style.display='none'; activeBtn=null;
-    if (!transcript) return;
-    if (isNumber) { var num=parseVozNumber(transcript); inp.value=num; inp.dispatchEvent(new Event('input')); showToast('🎤 '+transcript+' → '+num); }
-    else { inp.value=transcript; inp.dispatchEvent(new Event('input')); showToast('🎤 '+transcript); }
-  };
-  rec.onerror = function(e){ btn.classList.remove('listening'); document.getElementById('listen-overlay').style.display='none'; activeBtn=null; if(e.error!=='no-speech') showToast('⚠️ Error micro: '+e.error); };
-  rec.onend = function(){ btn.classList.remove('listening'); document.getElementById('listen-overlay').style.display='none'; activeBtn=null; };
-  try { rec.start(); } catch(ex){ showToast('⚠️ No se pudo iniciar el micrófono'); }
-}
-function vozSetup(id,btn){ iniciarVoz(document.getElementById(id),btn,false); }
-function vozCampo(id,btn){ iniciarVoz(document.getElementById(id),btn,false); }
-function parseVozNumber(txt) {
-  var t=txt.toLowerCase().trim();
-  var n={'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,'diez':10,'once':11,'doce':12,'veinte':20,'treinta':30,'cuarenta':40,'cincuenta':50,'sesenta':60,'setenta':70,'ochenta':80,'noventa':90,'cien':100,'coma':'.','punto':'.'};
-  t=t.replace(/coma|punto/g,'.'); for(var k in n){t=t.replace(new RegExp('\\b'+k+'\\b','g'),' '+n[k]+' ');}
-  var num=parseFloat(t.replace(/[^0-9.]/g,''));
-  return isNaN(num)?0:Math.round(num*100)/100;
-}
+function calcular(){var base=0;partides.forEach(function(p){base+=(p.cant||0)*(p.preu||0);});var ivaPct=parseFloat(document.getElementById('iva-sel').value)||0;var iva=base*ivaPct/100;document.getElementById('sum-base').textContent=fmt(base);document.getElementById('sum-iva').textContent=fmt(iva);document.getElementById('sum-total').textContent=fmt(base+iva);}
 
-// ─── CALCUL ───────────────────────────────────────────────────────────────────
-function calcular() {
-  var base=0; partides.forEach(function(p){base+=(p.cant||0)*(p.preu||0);});
-  var ivaPct=parseFloat(document.getElementById('iva-sel').value)||0;
-  var iva=base*ivaPct/100; var total=base+iva;
-  document.getElementById('sum-base').textContent=fmt(base);
-  document.getElementById('sum-iva').textContent=fmt(iva);
-  document.getElementById('sum-total').textContent=fmt(total);
-}
-
-// ─── PDF ──────────────────────────────────────────────────────────────────────
-function generarPDF() {
-  if (typeof window.jspdf==='undefined') { showToast('⏳ Cargando PDF...'); return; }
-  var {jsPDF}=window.jspdf; var doc=new jsPDF({unit:'mm',format:'a4'});
-  var W=210; var Y=20; var rgb=hexToRgb(userData?userData.color:'#2d7a2d');
-  doc.setFillColor(rgb.r,rgb.g,rgb.b); doc.rect(0,0,W,30,'F');
-  doc.setTextColor(255,255,255);
-  if (userData&&userData.logo) {
-    try { doc.addImage(userData.logo,'JPEG',6,4,22,22); doc.setFontSize(16);doc.setFont('helvetica','bold'); doc.text(userData.nom,32,13); doc.setFontSize(9);doc.setFont('helvetica','normal'); doc.text(userData.esp+(userData.tel?' · '+userData.tel:'')+(userData.pob?' · '+userData.pob:''),32,21); }
-    catch(e) { doc.setFontSize(18);doc.setFont('helvetica','bold');doc.text(userData.nom,14,13); }
-  } else { doc.setFontSize(18);doc.setFont('helvetica','bold');doc.text(userData?userData.nom:'Presupuestador',14,13); if(userData){doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text(userData.esp+(userData.tel?' · '+userData.tel:'')+(userData.pob?' · '+userData.pob:''),14,21);} }
-  doc.text('PRESUPUESTO',W-14,13,{align:'right'}); doc.text(new Date().toLocaleDateString('es-ES'),W-14,21,{align:'right'});
-  Y=38; doc.setTextColor(30,30,30);
-  var nom=document.getElementById('cli-nom').value; var adr=document.getElementById('cli-adr').value; var obs=document.getElementById('cli-obs').value;
-  if (nom||adr) { doc.setFontSize(10);doc.setFont('helvetica','bold');doc.setTextColor(rgb.r,rgb.g,rgb.b);doc.text('CLIENTE',14,Y);Y+=5;doc.setFont('helvetica','normal');doc.setTextColor(30,30,30);doc.setFontSize(10);if(nom){doc.text(nom,14,Y);Y+=5;}if(adr){doc.text(adr,14,Y);Y+=5;}Y+=3; }
-  doc.setFillColor(rgb.r,rgb.g,rgb.b); doc.rect(14,Y,W-28,7,'F'); doc.setTextColor(255,255,255);doc.setFontSize(9);doc.setFont('helvetica','bold');
-  doc.text('DESCRIPCIÓN',17,Y+5); doc.text('CANT.',130,Y+5,{align:'right'}); doc.text('PRECIO/u.',160,Y+5,{align:'right'}); doc.text('TOTAL',W-14,Y+5,{align:'right'});
-  Y+=9; doc.setTextColor(30,30,30); doc.setFont('helvetica','normal');
-  partides.forEach(function(p,i){ if(!p.nom&&!p.preu) return; if(i%2===0){doc.setFillColor(248,250,252);doc.rect(14,Y-4,W-28,7,'F');} var tot=(p.cant||0)*(p.preu||0); doc.text(p.nom||'-',17,Y);doc.text((p.cant||0).toString(),130,Y,{align:'right'});doc.text((p.preu||0).toFixed(2)+' €',160,Y,{align:'right'});doc.text(tot.toFixed(2)+' €',W-14,Y,{align:'right'});Y+=7; });
-  Y+=5;
-  doc.setFontSize(9); doc.text('Base imponible:',130,Y);doc.text(document.getElementById('sum-base').textContent,W-14,Y,{align:'right'});Y+=5;
-  doc.text('IVA ('+document.getElementById('iva-sel').value+'%):',130,Y);doc.text(document.getElementById('sum-iva').textContent,W-14,Y,{align:'right'});Y+=5;
+function generarPDF(){
+  if(typeof window.jspdf==='undefined'){showToast('⏳ Cargando PDF...');return;}
+  var {jsPDF}=window.jspdf;var doc=new jsPDF({unit:'mm',format:'a4'});
+  var W=210,Y=20,rgb=hexToRgb(userData?userData.color:'#1a3d8f');
+  doc.setFillColor(rgb.r,rgb.g,rgb.b);doc.rect(0,0,W,30,'F');doc.setTextColor(255,255,255);
+  if(userData&&userData.logo){try{doc.addImage(userData.logo,'JPEG',6,4,22,22);}catch(e){}}
+  doc.setFontSize(userData&&userData.logo?16:18);doc.setFont('helvetica','bold');doc.text(userData?userData.nom:'Presupuestador',userData&&userData.logo?32:14,13);
+  if(userData){doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text(userData.esp+(userData.tel?' · '+userData.tel:'')+(userData.pob?' · '+userData.pob:''),userData&&userData.logo?32:14,21);}
+  doc.text('PRESUPUESTO',W-14,13,{align:'right'});doc.text(new Date().toLocaleDateString('es-ES'),W-14,21,{align:'right'});
+  Y=38;doc.setTextColor(30,30,30);
+  var nom=document.getElementById('cli-nom').value,adr=document.getElementById('cli-adr').value,obs=document.getElementById('cli-obs').value;
+  if(nom||adr){doc.setFontSize(10);doc.setFont('helvetica','bold');doc.setTextColor(rgb.r,rgb.g,rgb.b);doc.text('CLIENTE',14,Y);Y+=5;doc.setFont('helvetica','normal');doc.setTextColor(30,30,30);if(nom){doc.text(nom,14,Y);Y+=5;}if(adr){doc.text(adr,14,Y);Y+=5;}Y+=3;}
+  doc.setFillColor(rgb.r,rgb.g,rgb.b);doc.rect(14,Y,W-28,7,'F');doc.setTextColor(255,255,255);doc.setFontSize(9);doc.setFont('helvetica','bold');
+  doc.text('DESCRIPCIÓN',17,Y+5);doc.text('CANT.',130,Y+5,{align:'right'});doc.text('PRECIO/u.',160,Y+5,{align:'right'});doc.text('TOTAL',W-14,Y+5,{align:'right'});
+  Y+=9;doc.setTextColor(30,30,30);doc.setFont('helvetica','normal');
+  partides.forEach(function(p,i){if(!p.nom&&!p.preu)return;if(i%2===0){doc.setFillColor(248,250,252);doc.rect(14,Y-4,W-28,7,'F');}var tot=(p.cant||0)*(p.preu||0);doc.text(p.nom||'-',17,Y);doc.text((p.cant||0).toString(),130,Y,{align:'right'});doc.text((p.preu||0).toFixed(2)+' €',160,Y,{align:'right'});doc.text(tot.toFixed(2)+' €',W-14,Y,{align:'right'});Y+=7;});
+  Y+=5;var ivaPct=document.getElementById('iva-sel').value;var ivaLabel=ivaPct==='7'?'IGIC':'IVA';
+  doc.setFontSize(9);doc.text('Base imponible:',130,Y);doc.text(document.getElementById('sum-base').textContent,W-14,Y,{align:'right'});Y+=5;
+  doc.text(ivaLabel+' ('+ivaPct+'%):',130,Y);doc.text(document.getElementById('sum-iva').textContent,W-14,Y,{align:'right'});Y+=5;
   doc.setFillColor(rgb.r,rgb.g,rgb.b);doc.rect(120,Y-4,W-134,8,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(11);
-  doc.text('TOTAL:',130,Y+2);doc.text(document.getElementById('sum-total').textContent,W-14,Y+2,{align:'right'});Y+=14;doc.setTextColor(30,30,30);doc.setFont('helvetica','normal');
-  if (obs){doc.setFontSize(8);doc.text('Observaciones: '+obs,14,Y);}
-  Y=270; doc.setDrawColor(45,122,45);doc.setLineWidth(1);doc.line(14,Y,W-14,Y);Y+=6;
-  doc.setFillColor(45,122,45);doc.rect(14,Y-4,W-28,10,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(9);
-  doc.text('Durcaplast · Fábrica de Pinturas · Dúrcal, Granada · durcaplast.com',W/2,Y+3,{align:'center'});
+  doc.text('TOTAL:',130,Y+2);doc.text(document.getElementById('sum-total').textContent,W-14,Y+2,{align:'right'});
+  if(obs){Y+=14;doc.setTextColor(30,30,30);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text('Observaciones: '+obs,14,Y);}
+  Y=270;doc.setFillColor(245,200,0);doc.rect(0,Y-2,W,14,'F');doc.setTextColor(26,61,143);doc.setFont('helvetica','bold');doc.setFontSize(10);
+  doc.text('Unidos por Gran Canaria · Gáldar',W/2,Y+7,{align:'center'});
   doc.save('presupuesto-'+(document.getElementById('cli-nom').value||'cliente').replace(/\s+/g,'-').toLowerCase()+'.pdf');
   showToast('✅ ¡PDF generado!');
 }
 
-function netejar() {
-  if (!confirm('¿Limpiar el presupuesto actual?')) return;
-  document.getElementById('cli-nom').value=''; document.getElementById('cli-adr').value=''; document.getElementById('cli-obs').value='';
-  document.getElementById('cli-data').value=new Date().toISOString().split('T')[0];
-  partides=[]; partidaId=0; afegirPartida(false); showToast('🗑 Presupuesto limpiado');
-}
+function netejar(){if(!confirm('¿Limpiar el presupuesto?'))return;document.getElementById('cli-nom').value='';document.getElementById('cli-adr').value='';document.getElementById('cli-obs').value='';document.getElementById('cli-data').value=new Date().toISOString().split('T')[0];partides=[];partidaId=0;afegirPartida(false);showToast('🗑 Presupuesto limpiado');}
 
-// ─── PWA ──────────────────────────────────────────────────────────────────────
 var deferredPrompt=null;
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('pwa-install-bar').style.display='block';});
 function instalarPWA(){if(!deferredPrompt){showToast('📲 Menú del navegador → Añadir a inicio');return;}deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted'){showToast('✅ ¡App instalada!');document.getElementById('pwa-install-bar').style.display='none';}deferredPrompt=null;});}
 
-// ─── MAYÚSCULAS ───────────────────────────────────────────────────────────────
 document.addEventListener('input',function(e){var el=e.target;if(el.tagName!=='INPUT'&&el.tagName!=='TEXTAREA')return;if(el.type==='number'||el.type==='date'||el.type==='tel')return;var val=el.value,pos=el.selectionStart;var nuevo=val.replace(/(^|\s)(\S)/g,function(m,s,l){return s+l.toUpperCase();});if(nuevo!==val){el.value=nuevo;try{el.setSelectionRange(pos,pos);}catch(e){}}});
+
+var SpeechRec=window.SpeechRecognition||window.webkitSpeechRecognition,activeBtn=null;
+function addVozListener(btn,inp,isNumber){var isMobile=/Android|iPhone|iPad/i.test(navigator.userAgent);btn.addEventListener(isMobile?'touchstart':'click',function(e){e.preventDefault();e.stopPropagation();iniciarVoz(inp,btn,isNumber);},{passive:false});}
+function iniciarVoz(inp,btn,isNumber){if(!SpeechRec){showToast('⚠️ Tu navegador no soporta la voz');return;}if(activeBtn&&activeBtn!==btn)activeBtn.classList.remove('listening');if(btn.classList.contains('listening')){btn.classList.remove('listening');document.getElementById('listen-overlay').style.display='none';activeBtn=null;return;}var rec=new SpeechRec();rec.lang='es-ES';rec.interimResults=false;rec.maxAlternatives=3;btn.classList.add('listening');document.getElementById('listen-overlay').style.display='block';activeBtn=btn;rec.onresult=function(e){var t='';for(var i=0;i<e.results[0].length;i++){var s=e.results[0][i].transcript.trim();if(s){t=s;break;}}btn.classList.remove('listening');document.getElementById('listen-overlay').style.display='none';activeBtn=null;if(!t)return;if(isNumber){var num=parseVozNumber(t);inp.value=num;inp.dispatchEvent(new Event('input'));showToast('🎤 '+t+' → '+num);}else{inp.value=t;inp.dispatchEvent(new Event('input'));showToast('🎤 '+t);}};rec.onerror=function(e){btn.classList.remove('listening');document.getElementById('listen-overlay').style.display='none';activeBtn=null;if(e.error!=='no-speech')showToast('⚠️ Error: '+e.error);};rec.onend=function(){btn.classList.remove('listening');document.getElementById('listen-overlay').style.display='none';activeBtn=null;};try{rec.start();}catch(ex){showToast('⚠️ No se pudo iniciar el micrófono');}}
+function vozSetup(id,btn){iniciarVoz(document.getElementById(id),btn,false);}
+function vozCampo(id,btn){iniciarVoz(document.getElementById(id),btn,false);}
+function parseVozNumber(txt){var t=txt.toLowerCase().trim();var n={'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,'diez':10,'once':11,'doce':12,'veinte':20,'treinta':30,'cuarenta':40,'cincuenta':50,'sesenta':60,'setenta':70,'ochenta':80,'noventa':90,'cien':100,'coma':'.','punto':'.'};t=t.replace(/coma|punto/g,'.');for(var k in n){t=t.replace(new RegExp('\\b'+k+'\\b','g'),' '+n[k]+' ');}var num=parseFloat(t.replace(/[^0-9.]/g,''));return isNaN(num)?0:Math.round(num*100)/100;}
 </script>
 </body>
 </html>
